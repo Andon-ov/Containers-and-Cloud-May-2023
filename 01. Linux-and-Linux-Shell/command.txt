@@ -1,0 +1,84 @@
+
+whoami                                     -> displays the currently logged-in user
+uname -a                                   -> print OS information
+top                                        -> display all active processes in interactive mode
+top -d 2 -n 5                              -> display user's processes with 2 sec delay 5 times
+tree /                                     -> display tree
+history                                    -> display command history
+ls -la                                     
+ls -la /usr/bin                            -> absolute notation
+ls -la ../                                 -> relative notation
+echo 'Hello World!' > hello.txt            -> redirect Output (>)
+echo 'line #2' >> hello.txt                -> redirect Output with Append (>>)
+
+cat < hello.txt                            -> redirect Input (<)
+cat hello.txt                              
+
+ls non-existing-file.txt ; echo Ok         -> execute in order (disconnected) / Sequence: command1 ; command2 / Always execute next command
+
+ls non-existing-file.txt | echo Ok         -> execute in order (connected) / Pipe: command1 | command2 / Chaining two or more programs' output together
+ls | sort | head -n 3
+
+ls non-existing-file.txt && echo Ok        -> execute conditionally / On Success: command1 && command2 / Next command is executed if previous one exited with a status
+of 0 (success)
+ls hello.txt && echo Ok
+
+ls hello.txt || echo Ok                    -> execute conditionally / On Failure: command1 || command2 / Next command is NOT attempted if previous one exited with 0
+ls non-existing-file.txt || echo Ok
+
+cat /etc/passwd                            -> users in Linux
+cat /etc/group                             -> groups in Linux
+
+sudo -u testuser whoami                    -> execute command as another user
+sudo su testuser                           -> switch to a user
+su - testuser                              -> switch to a user with a login shell
+sudo chmod +x hello.txt                    -> execute a single command as root
+
+chmod 000 script.sh                        -> no one can read, write, or execute the file "script.sh".
+chmod 755 script.sh                        -> the owner can read, write, and execute the file. The group and others can only read and execute the file.
+chmod 777 script.sh                        -> everyone can read, write, and execute the file.
+
+chown user:users file.txt                  -> change both owner and group of a file*
+chgrp developers file*                     -> change the group of files*
+
+env                                        -> list all environment variables
+printenv
+
+printenv Home                              -> print a single environment variable
+echo $Home
+
+ssh 192.168.0.28 –l root                   -> secure Shell (ssh) allows connecting to a remote machine's console
+
+mkdir dir1 dir2                            -> create two directories
+mkdir –pv projects/project1                -> create nested direktories
+
+touch -a .bash_history                     -> change access time of a file
+touch file1.txt                            -> create an empty file
+
+cp file1.txt ~/dir1/file2.txt              -> copy single file
+cp /etc/*.conf ~/dir2                      -> copy multiple files to a folder
+
+mv file1.txt first-file.txt                -> rename a file
+mv *.txt ~/TextFiles                       -> move multiple files to a folder
+
+rm first-file.txt                          -> remove file
+rm -rf ~/TextFiles                         -> remove folder and its contents
+
+head /etc/passwd                           -> show first ten lines of a file
+head -n 3 /etc/passwd                      -> show first three lines of a file
+tail /etc/passwd                           -> show last ten lines of a file
+tail -n 3 /etc/passwd                      -> show last three lines of a file
+
+cat os-release                             -> show content of file "os-release"
+
+jobs                                       -> list all jobs
+jobs -l                                    -> print all jobs with extended information
+
+ps aux                                     -> list every process on the system
+ps axjf                                    -> print a process tree
+
+killall -9 bash                            -> send SIGKILL to all bash processes
+killall -i bash                            -> send SIGTERM to all bash processes with prompt
+
+curl -I https://www.gnu.org/               -> fetch only the HTTP headers of the specified URL
+wget -O latest-hugo.zip \\nhttps://github.com/gohugoio/hugo/archive/master.zip -> download file under different name

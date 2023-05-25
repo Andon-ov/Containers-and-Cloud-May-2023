@@ -1,0 +1,2 @@
+docker build -t tracker_app .
+docker run --detach -p 8080:80 tracker_app

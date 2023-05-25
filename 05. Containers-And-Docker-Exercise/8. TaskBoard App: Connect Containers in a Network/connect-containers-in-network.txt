@@ -1,0 +1,9 @@
+docker run \
+ -e "ACCEPT_EULA=Y" \
+ -e "MSSQL_SA_PASSWORD=yourStrongPassword12#" \
+ -p 1433:1433 \
+ -v sqldata:/var/opt/mssql \
+ --network taskboard_network \
+ --name sqlserver \
+ --rm \
+  mcr.microsoft.com/mssql/server:2022-latest
