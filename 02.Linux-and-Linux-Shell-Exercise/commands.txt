@@ -1,0 +1,70 @@
+echo a > file; echo b >> file; echo c >> file    -> create file and write into him 
+cat file                                         -> reading file 
+ln -s file file-soft-link                        -> create file soft link
+ln file file-hard-link                           -> create file hard link
+ls -lai                                          
+    ls: The command for listing files and directories.
+    -l: Option to display detailed information about files and directories.
+    -a: Option to include hidden files and directories in the listing.
+    -i: Option to display the inode number of each file and directory.
+
+/dev/null  -> is a special device file in Linux and Unix-like operating systems that serves as a bit bucket or a black hole. 
+            It is often referred to as the "null device." When data is written to /dev/null, it is discarded and effectively disappears. 
+            Similarly, when reading from /dev/null, it returns an end-of-file (EOF) condition, indicating that there is no data to be read.
+
+sed        -> "sed" is a powerful command-line tool in Unix-like operating systems used for text manipulation. 
+            It stands for "stream editor" and is primarily used for performing find-and-replace operations, text substitutions,
+             and editing tasks on text files or input streams.
+
+    -e SCRIPT or --expression=SCRIPT: Specifies the script or set of commands to be executed by sed.
+    -i[SUFFIX] or --in-place[=SUFFIX]: Modifies the input file(s) in-place, saving the changes directly to the file(s). An optional backup file with the specified suffix can be created.
+    -r or --regexp-extended: Enables extended regular expressions, allowing more complex pattern matching.
+    -n or --quiet or --silent: Suppresses automatic printing of pattern space. Only explicitly specified output is printed.
+    s/PATTERN/REPLACEMENT/FLAGS: The most commonly used sed command. It substitutes occurrences of PATTERN with REPLACEMENT in the input.
+
+find        -> The find command is a versatile utility in Unix-like operating systems used to search for files and directories in a specified location based on various criteria.
+            It allows you to locate files based on their names, types, sizes, timestamps, and more.
+    
+    -name pattern: Searches for files or directories with a specific name or pattern.
+    -type type: Filters files based on their type, such as regular files (f), directories (d), symbolic links (l), etc.
+    -size [+|-]size: Searches for files based on their size. The + sign indicates greater than, the - sign indicates less than, and the size is specified in bytes by default.
+    -mtime [+|-]days: Finds files based on their modification time. The + sign indicates older than, the - sign indicates newer than, and the days specify the number of days.
+    -user username or -group groupname: Searches for files owned by a specific user or group.
+    -exec command {} \;: Executes a command on each file or directory found. The {} is a placeholder for the found files, and \; indicates the end of the -exec command.
+
+find / -name bash 2> /dev/null   ->    find: The command for searching files and directories.
+                                        /: Specifies the starting directory for the search. In this case, it is the root directory.
+                                        -name bash: Specifies the name to search for, which is "bash" in this example.
+                                        2> /dev/null: Redirects any error messages generated during the search to /dev/null, effectively suppressing them.
+
+cat file 1 > /dev/null 2>&1        -> executes the 'cat' command to display the contents of "file", 
+                                        but both the 'output' and any 'error messages' are redirected 
+                                        to /dev/null, effectively discarding them.
+
+cat <<EOF > test.txt                -> https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+                                        # Create multiple YAML objects from stdin
+
+echo $0                             -> is used to display the name of the currently running shell or the name 
+                                        of the shell script being executed.
+
+ ls p*                              ->     ls: The command for listing files and directories.
+                                           p*: The pattern "p*" is a wildcard that matches any file or directory name 
+                                           starting with the letter "p" followed by any other characters.
+
+date                                ->     -R or --rfc-2822: Formats the output in RFC 2822 date format.
+                                            +%FORMAT: Specifies a custom format for the output using conversion specifiers. For example, +%Y-%m-%d will display the date in the format "YYYY-MM-DD".
+                                            -u or --utc or --universal: Displays the date and time in UTC (Coordinated Universal Time).
+                                            -d STRING or --date=STRING: Displays the date and time specified by the provided string instead of the current date and time.
+date +%Y-%d-%m   
+date +%d-%Y-%m
+date +%d-%m-%Y 
+
+cal                                 ->     -3 or --three-month: Displays the calendar for the previous, current, and next month.
+                                           -y or --year: Displays the calendar for the entire year.
+                                           -h or --highlight-today: Highlights the current day in the calendar.
+
+uptime                              -> is useful for quickly checking how long a system has been running without having to view system logs
+                                         or check other sources of information.
+
+echo $HISTFILE                      ->  environment variable how showing path of history file
+1hr
