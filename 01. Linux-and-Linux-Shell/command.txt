@@ -1,3 +1,185 @@
+"whoami"
+    Displays the currently logged-in user.
+
+"uname -a"
+    Prints OS information.
+
+"top"
+    Displays all active processes in interactive mode.
+
+"top -d 2 -n 5"
+    Displays user's processes with a 2-second delay, repeated 5 times.
+
+"tree /"
+    Displays the directory tree.
+
+"history"
+    Displays command history.
+
+"ls -la"
+    Lists files and directories in long format.
+
+"ls -la /usr/bin"
+    Lists files and directories in the absolute notation of the /usr/bin directory.
+
+"ls -la ../"
+    Lists files and directories in the relative notation of the parent directory.
+
+"echo 'Hello World!' > hello.txt"
+    Redirects output to a file named hello.txt, overwriting if it exists.
+
+"echo 'line #2' >> hello.txt"
+    Redirects output with append to a file named hello.txt.
+
+"cat < hello.txt"
+    Redirects input from a file named hello.txt.
+
+"cat hello.txt"
+    Displays the contents of a file named hello.txt.
+
+"ls non-existing-file.txt ; echo Ok"
+    Executes two commands sequentially; the second command is always executed.
+
+"ls non-existing-file.txt | echo Ok"
+    Executes two commands sequentially, chaining the output of the first command as input to the second command.
+
+"ls | sort | head -n 3"
+    Executes three commands sequentially, chaining the output of each command as input to the next command.
+
+"ls non-existing-file.txt && echo Ok"
+    Executes the second command conditionally if the first command succeeds (exits with a status of 0).
+
+"ls hello.txt && echo Ok"
+    Executes the second command conditionally if the first command succeeds.
+
+"ls hello.txt || echo Ok"
+    Executes the second command conditionally if the first command fails (exits with a non-zero status).
+
+"ls non-existing-file.txt || echo Ok"
+    Executes the second command conditionally if the first command fails.
+
+"cat /etc/passwd"
+    Displays the users in Linux.
+
+"cat /etc/group"
+    Displays the groups in Linux.
+
+"sudo -u testuser whoami"
+    Executes the command as another user.
+
+"sudo su testuser"
+    Switches to another user.
+
+"su - testuser"
+    Switches to another user with a login shell.
+
+"sudo chmod +x hello.txt"
+    Changes the permissions of hello.txt to make it executable.
+
+"chmod 000 script.sh"
+    Sets permissions on script.sh to deny read, write, and execute access to all users.
+
+"chmod 755 script.sh"
+    Sets permissions on script.sh to allow the owner to read, write, and execute, and others to read and execute.
+
+"chmod 777 script.sh"
+    Sets permissions on script.sh to allow all users to read, write, and execute.
+
+"chown user"
+
+"users file.txt"
+    Changes both the owner and group of file.txt.
+
+"chgrp developers file*"
+    Changes the group of files.
+
+"env"
+    Lists all environment variables.
+
+"printenv"
+    Prints all environment variables.
+
+"printenv Home"
+    Prints the value of a specific environment variable.
+
+"echo $Home"
+    Prints the value of the Home environment variable.
+
+"ssh 192.168.0.28 –l root"
+    Establishes a secure Shell (SSH) connection to a remote machine using the root account.
+
+"mkdir dir1 dir2"
+    Creates two directories.
+
+"mkdir –pv projects/project1"
+    Creates nested directories with parent directories created if they don't exist.
+
+"touch -a .bash_history"
+    Changes the access time of a file.
+
+"touch file1.txt"
+    Creates an empty file named file1.txt.
+
+"cp file1.txt ~/dir1/file2.txt"
+    Copies a single file to another location.
+
+"cp /etc/*.conf ~/dir2"
+    Copies multiple files to a folder.
+
+"mv file1.txt first-file.txt"
+    Renames a file.
+
+"*mv .txt ~/TextFiles"
+    Moves multiple files to a folder.
+
+"rm first-file.txt"
+    Removes a file.
+
+"rm -rf ~/TextFiles"
+    Removes a folder and its contents.
+
+"head /etc/passwd"
+    Displays the first ten lines of a file.
+
+"head -n 3 /etc/passwd"
+    Displays the first three lines of a file.
+
+"tail /etc/passwd"
+    Displays the last ten lines of a file.
+
+"tail -n 3 /etc/passwd"
+    Displays the last three lines of a file.
+
+"cat os-release"
+    Displays the content of the file "os-release".
+
+"jobs"
+    Lists all jobs.
+
+"jobs -l"
+    Prints all jobs with extended information.
+
+"ps aux"
+    Lists every process on the system.
+
+"ps axjf"
+    Prints a process tree.
+
+"killall -9 bash"
+    Sends a SIGKILL signal to all bash processes.
+
+"killall -i bash"
+    Sends a SIGTERM signal to all bash processes with a prompt.
+
+"curl -I https://www.gnu.org/"
+    Fetches only the HTTP headers of the specified URL.
+
+"wget -O latest-hugo.zip \nhttps://github.com/gohugoio/hugo/archive/master.zip"
+     Downloads a file from a specified URL and saves it with a different name.
+
+
+
+Old 
 
 whoami                                     -> displays the currently logged-in user
 uname -a                                   -> print OS information
@@ -82,3 +264,4 @@ killall -i bash                            -> send SIGTERM to all bash processes
 
 curl -I https://www.gnu.org/               -> fetch only the HTTP headers of the specified URL
 wget -O latest-hugo.zip \\nhttps://github.com/gohugoio/hugo/archive/master.zip -> download file under different name
+

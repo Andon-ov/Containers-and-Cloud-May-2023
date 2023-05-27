@@ -1,0 +1,58 @@
+1.NGINX Server Container
+
+docker pull nginxdemos/hello  
+docker images
+
+docker run nginxdemos/hello  
+docker run -p 5000:80 nginxdemos/hello  
+docker rm 0822be8f501f 
+
+docker run -p 5000:80 --name code_it_up nginxdemos/hello  
+docker ps -a
+docker rm 77aa4a86141a
+
+docker run -d -p 5000:80 --name code_it_up nginxdemos/hello 
+docker logs 28961315f461a6e8a46d08664ccf63ee6fb42f33eae0158c08ec3d482bc9432d
+docker logs code_it_up
+docker logs 28
+docker rm code_it_up -f
+
+docker rmi nginxdemos/hello
+docker images
+
+2. Vue.js App in Container
+
+mkdir MyWebsite
+cd MyWebsite/
+
+sudo npm i -g @vue/cli-init
+sudo vue init browserify .
+sudo npm install
+
+docker pull node:16
+sudo npm run dev
+code package.json
+sudo docker run -it -p 8080:8080 -v $(pwd):/app -w /app node:16 npm run serve 
+
+3. MongoDB in Container
+
+docker pull mongo
+
+docker run \
+-p 27017:27017 \
+-v ${PWD}/data:/etc/mongo \
+-d \
+-e MONGO_INITDB_ROOT_USERNAME=mongoadmin \
+-e MONGO_INITDB_ROOT_PASSWORD=mongoadminpass \
+mongo 
+
+"docker run → starts a new Docker container;
+• -p 27017:27017 → sets the external and internal ports to 27017, so that we can access the MongoDB
+from outside the container;
+• -v ${PWD}/data:/etc/mongo
+o ${PWD} → the host directory;
+o /etc/mongo → the container directory;
+• -d → runs the container in detached mode (it will run in the background);
+• -e MONGO_INITDB_ROOT_USERNAME=mongoadmin → sets the admin username;
+• -e MONGO_INITDB_ROOT_PASSWORD=mongoadminpass → sets the admin password;
+• mongo → specifies the image"

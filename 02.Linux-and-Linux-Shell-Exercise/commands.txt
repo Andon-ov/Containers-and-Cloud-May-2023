@@ -2,11 +2,12 @@ echo a > file; echo b >> file; echo c >> file    -> create file and write into h
 cat file                                         -> reading file 
 ln -s file file-soft-link                        -> create file soft link
 ln file file-hard-link                           -> create file hard link
+
 ls -lai                                          
-    ls: The command for listing files and directories.
-    -l: Option to display detailed information about files and directories.
-    -a: Option to include hidden files and directories in the listing.
-    -i: Option to display the inode number of each file and directory.
+            ls: The command for listing files and directories.
+            -l: Option to display detailed information about files and directories.
+            -a: Option to include hidden files and directories in the listing.
+            -i: Option to display the inode number of each file and directory.
 
 /dev/null  -> is a special device file in Linux and Unix-like operating systems that serves as a bit bucket or a black hole. 
             It is often referred to as the "null device." When data is written to /dev/null, it is discarded and effectively disappears. 
@@ -14,57 +15,276 @@ ls -lai
 
 sed        -> "sed" is a powerful command-line tool in Unix-like operating systems used for text manipulation. 
             It stands for "stream editor" and is primarily used for performing find-and-replace operations, text substitutions,
-             and editing tasks on text files or input streams.
+            and editing tasks on text files or input streams.
 
-    -e SCRIPT or --expression=SCRIPT: Specifies the script or set of commands to be executed by sed.
-    -i[SUFFIX] or --in-place[=SUFFIX]: Modifies the input file(s) in-place, saving the changes directly to the file(s). An optional backup file with the specified suffix can be created.
-    -r or --regexp-extended: Enables extended regular expressions, allowing more complex pattern matching.
-    -n or --quiet or --silent: Suppresses automatic printing of pattern space. Only explicitly specified output is printed.
-    s/PATTERN/REPLACEMENT/FLAGS: The most commonly used sed command. It substitutes occurrences of PATTERN with REPLACEMENT in the input.
+            -e SCRIPT or --expression=SCRIPT: Specifies the script or set of commands to be executed by sed.
+            -i[SUFFIX] or --in-place[=SUFFIX]: Modifies the input file(s) in-place, saving the changes directly to the file(s). An optional backup file with the specified suffix can be created.
+            -r or --regexp-extended: Enables extended regular expressions, allowing more complex pattern matching.
+            -n or --quiet or --silent: Suppresses automatic printing of pattern space. Only explicitly specified output is printed.
+            s/PATTERN/REPLACEMENT/FLAGS: The most commonly used sed command. It substitutes occurrences of PATTERN with REPLACEMENT in the input.
+    
+set         -> If no options or arguments are specified, set shall write the names and values of all shell variables in the collation sequence of the current locale.
 
 find        -> The find command is a versatile utility in Unix-like operating systems used to search for files and directories in a specified location based on various criteria.
             It allows you to locate files based on their names, types, sizes, timestamps, and more.
     
-    -name pattern: Searches for files or directories with a specific name or pattern.
-    -type type: Filters files based on their type, such as regular files (f), directories (d), symbolic links (l), etc.
-    -size [+|-]size: Searches for files based on their size. The + sign indicates greater than, the - sign indicates less than, and the size is specified in bytes by default.
-    -mtime [+|-]days: Finds files based on their modification time. The + sign indicates older than, the - sign indicates newer than, and the days specify the number of days.
-    -user username or -group groupname: Searches for files owned by a specific user or group.
-    -exec command {} \;: Executes a command on each file or directory found. The {} is a placeholder for the found files, and \; indicates the end of the -exec command.
+            -name pattern: Searches for files or directories with a specific name or pattern.
+            -type type: Filters files based on their type, such as regular files (f), directories (d), symbolic links (l), etc.
+            -size [+|-]size: Searches for files based on their size. The + sign indicates greater than, the - sign indicates less than, and the size is specified in bytes by default.
+            -mtime [+|-]days: Finds files based on their modification time. The + sign indicates older than, the - sign indicates newer than, and the days specify the number of days.
+            -user username or -group groupname: Searches for files owned by a specific user or group.
+            -exec command {} \;: Executes a command on each file or directory found. The {} is a placeholder for the found files, and \; indicates the end of the -exec command.
 
-find / -name bash 2> /dev/null   ->    find: The command for searching files and directories.
-                                        /: Specifies the starting directory for the search. In this case, it is the root directory.
-                                        -name bash: Specifies the name to search for, which is "bash" in this example.
-                                        2> /dev/null: Redirects any error messages generated during the search to /dev/null, effectively suppressing them.
+find / -name bash 2> /dev/null      ->  find: The command for searching files and directories.
+                                    /: Specifies the starting directory for the search. In this case, it is the root directory.
+                                    -name bash: Specifies the name to search for, which is "bash" in this example.
+                                    2> /dev/null: Redirects any error messages generated during the search to /dev/null, effectively suppressing them.
 
-cat file 1 > /dev/null 2>&1        -> executes the 'cat' command to display the contents of "file", 
-                                        but both the 'output' and any 'error messages' are redirected 
-                                        to /dev/null, effectively discarding them.
+cat file 1 > /dev/null 2>&1         ->  executes the 'cat' command to display the contents of "file", 
+                                    but both the 'output' and any 'error messages' are redirected 
+                                    to /dev/null, effectively discarding them.
 
 cat <<EOF > test.txt                -> https://kubernetes.io/docs/reference/kubectl/cheatsheet/
-                                        # Create multiple YAML objects from stdin
+                                    # Create multiple YAML objects from stdin
 
 echo $0                             -> is used to display the name of the currently running shell or the name 
-                                        of the shell script being executed.
+                                    of the shell script being executed.
 
- ls p*                              ->     ls: The command for listing files and directories.
-                                           p*: The pattern "p*" is a wildcard that matches any file or directory name 
-                                           starting with the letter "p" followed by any other characters.
+ls p*                               ->  ls: The command for listing files and directories.
+                                    p*: The pattern "p*" is a wildcard that matches any file or directory name 
+                                    starting with the letter "p" followed by any other characters.
 
-date                                ->     -R or --rfc-2822: Formats the output in RFC 2822 date format.
-                                            +%FORMAT: Specifies a custom format for the output using conversion specifiers. For example, +%Y-%m-%d will display the date in the format "YYYY-MM-DD".
-                                            -u or --utc or --universal: Displays the date and time in UTC (Coordinated Universal Time).
-                                            -d STRING or --date=STRING: Displays the date and time specified by the provided string instead of the current date and time.
+date                                -> -R or --rfc-2822: Formats the output in RFC 2822 date format.
+                                    +%FORMAT: Specifies a custom format for the output using conversion specifiers. For example, +%Y-%m-%d will display the date in the format "YYYY-MM-DD".
+                                    -u or --utc or --universal: Displays the date and time in UTC (Coordinated Universal Time).
+                                    -d STRING or --date=STRING: Displays the date and time specified by the provided string instead of the current date and time.
 date +%Y-%d-%m   
 date +%d-%Y-%m
 date +%d-%m-%Y 
 
-cal                                 ->     -3 or --three-month: Displays the calendar for the previous, current, and next month.
-                                           -y or --year: Displays the calendar for the entire year.
-                                           -h or --highlight-today: Highlights the current day in the calendar.
+cal                                 ->  -3 or --three-month: Displays the calendar for the previous, current, and next month.
+                                    -y or --year: Displays the calendar for the entire year.
+                                    -h or --highlight-today: Highlights the current day in the calendar.
 
 uptime                              -> is useful for quickly checking how long a system has been running without having to view system logs
-                                         or check other sources of information.
+                                    or check other sources of information.
 
-echo $HISTFILE                      ->  environment variable how showing path of history file
-1hr
+echo $HISTFILE                      -> environment variable how showing path of history file
+
+env                                 -> command is used to display the current environment variables 
+                                        HOME: The home directory of the current user.
+                                        PATH: The search path for executables, specifying directories where the system looks for commands.
+                                        LANG: The language and locale settings.
+                                        TERM: The terminal type or emulation.
+
+export                              -> command is typically used to make environment variables available to child processes
+                                    spawned from the current shell. When you export a variable, it becomes part of the environment
+                                    of subsequent commands or processes executed in the same shell session.
+
+set | grep var                      -> used to filter the output of the set command and display only the lines that contain
+                                     the word "var" in them. This allows you to find and view the environment variables or 
+                                     shell variables that have "var" in their names or values.
+
+grep                                -> print lines that match patterns
+
+                                            -i (or --ignore-case): Ignore case distinctions in the pattern.
+                                            -r (or --recursive): Recursively search directories and their subdirectories.
+                                            -l (or --files-with-matches): Only display the names of files with matching lines.
+                                            -n (or --line-number): Display line numbers along with the matched lines.
+                                            -v (or --invert-match): Invert the match, displaying lines that do not match the pattern.
+                                            -w (or --word-regexp): Match only whole words.
+
+set -o                              -> display the current settings or options of the shell
+
+                                            allexport: If set to "on", all defined variables are automatically exported to the environment of subsequently executed commands.
+                                            errexit or e: If set to "on", the shell exits immediately if any command within a script returns a non-zero exit status.
+                                            noclobber: If set to "on", prevents overwriting of existing files with output redirection (>, >|, >|&).
+                                            nounset or u: If set to "on", the shell treats unset variables as an error and causes the script to exit.
+                                            verbose or v: If set to "on", displays each command before it is executed.
+
+                                        noexec: it prevents the execution of any commands or scripts. This option is primarily used as a safety measure to prevent accidental execution of potentially harmful or unknown scripts.
+                                        xtrace: is a shell option that enables the tracing of commands before they are executed.
+
+help                                -> bash -> command provides access to built-in help information for various aspects of the shell.
+run-help                            -> zsh ->  command provides access to built-in help information for various aspects of the shell.
+
+run help command in zsh
+
+autoload -Uz run-help
+(( ${+aliases[run-help]} )) && unalias run-help
+alias help=run-help
+
+less --help                         ->  display the help documentation for the less pager, which is used for viewing text files
+
+jobs -l                             -> display information about the current active jobs and their statuses
+Ctrl+Z                              -> keyboard shortcut is used to suspend a foreground process in the terminal
+
+                fg <process number>  -> resume a suspended process, you can use the fg command followed by the job number
+                bg <process number>  -> command resumes the suspended job in the background, allowing it to continue running while you can interact with other processes in the foreground.
+                
+file                                 -> command is used to determine the type of a file.
+
+stat                                 -> command is used to display detailed information about a file or file system. 
+
+screen                               -> command is a terminal multiplexer in Linux that allows you to create multiple virtual terminals within a single terminal session.
+            Ctrl+A, Ctrl+D.  To detach from a screen session while leaving it running in the background, press Ctrl+A, release the keys, and then press Ctrl+D.
+                             To create a new window within a screen session, press Ctrl+A and then c.
+
+            screen -ls       This command lists all active screen sessions along with their session IDs and information about their status.
+            screen -r        To reattach to a detached screen session, use the screen -r command. If you have multiple detached sessions, it will prompt you to select which session to reattach to.
+            exit             To close the current window within a screen session, you can simply type exit 
+
+
+
+
+
+lynx https://www.example.com         -> The lynx command is a text-based web browser that allows you to browse websites and navigate through web pages directly from the command line in Linu
+
+ip a                                 -> command in Linux is used to display information about network interfaces on a system
+hostname -i                          -> command is used to retrieve the IP address associated with the hostname of the system
+
+dig example.com                      ->  command is a powerful DNS (Domain Name System) tool used to perform DNS queries and retrieve information about DNS records. 
+
+netstat                              ->  command is used to display network connections, routing tables, network interface statistics, and other network-related information in a Unix-like operating system. It provides a variety of options to view different aspects of network activity.
+
+ping                                 -> command is a network utility used to test the reachability and round-trip time (RTT) of a network host or IP address. It sends Internet Control Message Protocol (ICMP) Echo Request packets to the destination host and waits for ICMP Echo Reply packets to measure the response time.
+
+traceroute                           -> command is used to trace the route that packets take from your computer to a destination IP address or domain. It provides information about the network hops (routers) traversed by the packets, along with their round-trip time (RTT) and other statistics. This command is commonly used to diagnose network connectivity issues and identify network bottlenecks.
+
+xtrace                               -> is used to trace the execution of a program by printing the currently executed function. It offers options to control its behavior, such as specifying a file to print data from without actually running the program.
+
+ifconfig                             -> configure a network interface
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Commands and Explanations:
+- echo a > file; echo b >> file; echo c >> file:
+    Create a file named "file" and write "a", "b", and "c" into it.
+
+- cat file:
+    Read and display the contents of the file.
+
+- ln -s file file-soft-link:
+    Create a soft link named "file-soft-link" pointing to the file.
+
+- ln file file-hard-link:
+    Create a hard link named "file-hard-link" pointing to the file.
+
+- ls -lai:
+    List files and directories with detailed information, including inode numbers.
+
+- /dev/null:
+    A special device file that discards data written to it and returns an EOF when read from.
+
+- sed:
+    A powerful command-line tool for text manipulation, including find-and-replace operations.
+
+- set:
+    Display names and values of all shell variables in the current locale's collation sequence.
+
+- find:
+    Search for files and directories based on various criteria.
+
+- find / -name bash 2> /dev/null:
+    Search for the file or directory named "bash" starting from the root directory ("/"), suppressing error messages.
+
+- cat file 1 > /dev/null 2>&1:
+    Execute the "cat" command to display the contents of "file," discarding both output and error messages.
+
+- cat <<EOF > test.txt:
+    Create and write multiple YAML objects to a file named "test.txt" using stdin.
+
+- echo $0:
+    Display the name of the currently running shell or script.
+
+- ls p*:
+    List files and directories starting with the letter "p".
+
+- date:
+    Display the current date and time.
+
+- cal:
+    Display a calendar.
+
+- uptime:
+    Check how long a system has been running.
+
+- echo $HISTFILE:
+    Display the path of the history file.
+
+- env:
+    Display the current environment variables.
+
+- export:
+    Make environment variables available to child processes.
+
+- set | grep var:
+    Filter the output of the "set" command to show only lines containing the word "var".
+
+- grep:
+    Print lines that match patterns.
+
+- set -o:
+    Display the current shell options.
+
+- help:
+    Access built-in help information for the shell.
+
+- run-help:
+    Access built-in help information for the shell (zsh).
+
+- less --help:
+    Display help documentation for the "less" pager.
+
+- jobs -l:
+    Display information about active jobs.
+
+- Ctrl+Z:
+    Suspend a foreground process in the terminal.
+
+- file:
+    Determine the type of a file.
+
+- stat:
+    Display detailed information about a file or file system.
+
+- screen:
+    Terminal multiplexer to create and manage multiple virtual terminals.
+
+- lynx https://www.example.com:
+    Text-based web browser to browse websites from the command line.
+
+- ip a:
+    Display information about network interfaces.
+
+- hostname -i:
+    Retrieve the IP address associated with the system's hostname.
+
+- dig example.com:
+    Perform DNS queries and retrieve information about DNS records.
+
+- netstat:
+    Display network connections, routing tables, and network-related information.
+
+- ping:
+    Test the reachability and round-trip time of a network host or IP address.
+
+- traceroute:
+    Trace the route that packets take to a destination IP address or domain.
+
+- xtrace:
+    Trace the execution of a program by printing the currently executed function.
