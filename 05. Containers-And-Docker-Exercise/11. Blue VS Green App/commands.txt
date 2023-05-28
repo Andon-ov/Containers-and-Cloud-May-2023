@@ -1,0 +1,36 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as builder
+
+# Create a working directory
+WORKDIR /builder
+
+# Copy the .csproj file and restore
+COPY ./src/Worker/Worker.csproj .
+# Copy this file (./src/Worker/Worker.csproj) in (/builder).
+
+RUN dotnet restore
+# This command will analyze the project's dependencies and restore any missing packages or libraries based on the information in the project's *.csproj file and the NuGet.config file.
+
+# Copy source files to the image
+COPY ./src/Worker .
+# Copy this files (./src/Worker) in (/builder).
+
+# Build the project
+# RUN dotnet publish -c Release -o /out Worker.csproj
+RUN dotnet publish -c Release -o out Worker.csproj
+# Command executes the dotnet publish command within the container. 
+# It specifies the project file Worker.csproj and uses the Release configuration. 
+# The published output will be placed in the out directory.
+
+# Specify app image
+FROM mcr.microsoft.com/dotnet/aspnet:3.1
+
+# Specify working directory for this stage
+WORKDIR /app
+# Create a app directory in container
+
+# Tell Docker what command to run when our image is executed inside a container
+ENTRYPOINT dotnet Worker.dll
+
+# Copy the /out directory from the build stage into the runtime image
+COPY --from=builder /out .
+# Copy from builder to /app

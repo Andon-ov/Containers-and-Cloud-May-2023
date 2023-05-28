@@ -150,5 +150,8 @@ services:
         image: wordpress
 networks:
     my_network:
+volumes:
+    db_data:
+    wp_data:
 
 docker-compose down --rmi all --volumes       

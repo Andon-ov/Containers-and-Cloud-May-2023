@@ -1,0 +1,17 @@
+docker build . -t frontend 
+
+docker build . -t backend 
+
+docker network create react-express
+
+docker network create express-mongo
+
+ docker run -d -v ./data:/data/db --name mongo --network express-mongo mongo   
+
+ docker run -d --name frontend -p 3000:3000 --network react-express frontend 
+
+ docker run -d --name backend   --network react-express backend
+
+ docker network connect express-mongo backend 
+
+ 
