@@ -1,16 +1,17 @@
 # Using official python runtime base image
-FROM python
+FROM python:3.9-slim
 
 # Set the application directory
 WORKDIR /app
 
 # Copy requirements.txt and install dependencies
 COPY requirements.txt .
+RUN pip install --upgrade pip && pip install -r requirements.txt --no-cache-dir
 
 # Virtual environment (venv) is created and activated before installing the dependencies. 
 # This ensures that pip is executed within the virtual environment, avoiding any potential conflicts.
-RUN python -m venv venv
-RUN /bin/bash -c "source venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt --no-cache-dir"
+# RUN python -m venv venv
+# RUN /bin/bash -c "source venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt --no-cache-dir"
 
 # Copy our code from the current folder to /app inside the container
 COPY . .

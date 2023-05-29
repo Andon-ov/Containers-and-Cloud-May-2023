@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as builder
 
 # Create a working directory
-WORKDIR /builder
+WORKDIR /Worker
 
 # Copy the .csproj file and restore
 COPY ./src/Worker/Worker.csproj .
@@ -14,7 +14,7 @@ COPY ./src/Worker .
 RUN dotnet publish -c Release -o /out
 
 # Specify app image
-FROM mcr.microsoft.com/dotnet/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1
 
 # Specify working directory for this stage
 WORKDIR /app

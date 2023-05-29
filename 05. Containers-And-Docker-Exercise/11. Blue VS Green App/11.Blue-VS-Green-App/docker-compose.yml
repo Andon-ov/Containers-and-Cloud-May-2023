@@ -1,0 +1,101 @@
+# version: '3.8'
+# services:
+#   vote:
+#     container_name: vote
+#     build:
+#       dokerfile: ./vote/Dokerfile
+#     ports:
+#       - '5000:80'
+#     restart: on-failure
+#     networks:
+#       - frontend
+#       - backend
+#   result:
+#     container_name: result
+#     build:
+#       dokerfile: ./result/Dokerfile
+#     ports:
+#       - '5001:80'
+#     restart: on-failure
+#     networks:
+#       - frontend
+#       - backend
+#   worker:
+#     container_name: worker
+#     build:
+#       dokerfile: ./worker/Dokerfile
+#     restart: on-failure
+#     networks:
+#       - backend
+#   redis:
+#     container_name: redis
+#     image: redis
+#     networks:
+#       - backend
+#   postgres:
+#     container_name: postgres
+#     image: postgres
+#     networks:
+#       - backend
+#     envirement:
+#       - POSTGRES_PASSWORD=postgres
+#       - POSTGRES_DB=postgres
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+# volumes:
+#   pgdata:
+# networks:
+#   frontend:
+#   backend:
+version: '3.8'
+services:
+  vote:
+    container_name: vote
+    build:
+      context: ./vote
+      dockerfile: Dockerfile
+    ports:
+      - '5000:80'
+    restart: on-failure
+    networks:
+      - frontend
+      - backend
+  result:
+    container_name: result
+    build:
+      context: ./result
+      dockerfile: Dockerfile
+    ports:
+      - '5001:80'
+    restart: on-failure
+    networks:
+      - frontend
+      - backend
+  worker:
+    container_name: worker
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    restart: on-failure
+    networks:
+      - backend
+  redis:
+    container_name: redis
+    image: redis
+    networks:
+      - backend
+  db:
+    container_name: db
+    image: postgres
+    networks:
+      - backend
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
+networks:
+  frontend:
+  backend:
