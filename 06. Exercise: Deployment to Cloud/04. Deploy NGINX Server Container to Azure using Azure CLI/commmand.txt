@@ -1,0 +1,18 @@
+docker login azure
+
+docker context create aci nginxacicontext
+
+docker context use nginxacicontext 
+
+docker run -p 80:80 nginxdemos/hello
+
+docker ps -a
+
+docker rm sad-pare -f
+
+docker context ls
+
+docker context use default 
+
+docker context rm nginxacicontext
+

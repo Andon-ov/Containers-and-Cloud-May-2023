@@ -1,0 +1,73 @@
+1. Install Azure CLI:
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash 
+ -> Command is used to install the Azure CLI on a Debian-based Linux distribution. It retrieves the installation script from https://aka.ms/InstallAzureCLIDeb and pipes it to the bash command with superuser (sudo) privileges.
+
+2. Check Azure CLI version:
+az --version 
+ -> Command displays the version of the Azure CLI installed on your system. After installing the Azure CLI, you can verify the installation by running 
+
+3. Build a Docker image
+docker build -t tracker-app-image . 
+ -> Command is used to build a Docker image named "tracker-app-image" from the current directory (.). The Dockerfile present in the current directory defines the instructions for building the image.
+
+4. Run a Docker container
+docker run --name tracker -d -p 80:80 tracker-app-image
+ -> Command creates a Docker container named "tracker" using the "tracker-app-image" image. The container is detached (-d flag), and port 80 of the container is mapped to port 80 of the host machine (-p 80:80).
+
+5.Log in to Azure:
+az login 
+ -> To interact with Azure resources using the Azure CLI, you need to log in. The command initiates the login process. It may open a browser window for authentication or provide a code that you need to enter on the Azure login page.
+
+6. Create a resource group:
+az group create --name trackerappgroup --location westeurope 
+ -> Command creates a resource group named "trackerappgroup" in the "westeurope" region. A resource group is a logical container that holds related Azure resources.
+ 
+7. Create an Azure Container Registry (ACR).
+az acr create --resource-group trackerappgroup --name trackerappcrbigdo --sku Basic 
+ ->
+--resource-group: Specifies the name of the resource group in which the ACR will be created. In this case, it is trackerappgroup.
+--name: Specifies the name of the Azure Container Registry. Here, it is trackerappcr.
+--sku: Specifies the SKU (pricing tier) of the ACR. The value Basic is provided in this command, which represents the Basic pricing tier.
+
+8. Log in to an Azure Container Registry (ACR)
+az acr login --name trackerappcrbigdo
+ -> Command will log you into the Azure Container Registry named trackerappcrbigdo, allowing you to authenticate and access the container images stored in that registry.
+
+9. ACR in a tabular format
+az acr show --name trackerappcrbigdo --query loginServer --output table
+ -> Command will display the login server URL for the ACR named trackerappcrbigdo in a tabular format. The login server URL is the endpoint you will use when interacting with the ACR, such as pushing or pulling container images.
+ 
+10. Assigns the new tag 
+docker tag tracker-app-image trackerappcrbigdo.azurecr.io/racker-app-image:v1
+ -> Command assigns the new tag v1 to the tracker-app-image image and associates it with the ACR named trackerappcrbigdo. The resulting tagged image will be trackerappcrbigdo.azurecr.io/tracker-app-image:v1.
+ 
+ 
+ 11.
+ trackerappcrbigdo.azurecr.io/racker-app-image:v1
+ 
+ 12.
+ az acr repository list --name trackerappcrbigdo
+
+13.
+az container create --resource-group trackerappgroup --name trakerapp --image trackerappcrbigdo.azurecr.io/racker-app-image:v1 --cpu 1 --memory 1 --registry-login-server trackerappcrbigdo.azurecr.io --registry-username trackerappcrbigdo --ip-address Public --dns-name-label trackerappdnsbigdo --ports 80
+
+14.
+we have domain and ip addres and can got ower app in there: 	
+ "fqdn": "trackerappdnsbigdo.westeurope.azurecontainer.io",
+    "ip": "20.103.213.100",
+
+
+15.
+→ az container show --resource-group trackerappgroup --name trakerapp --query instanceView.state
+
+16.
+az container show --resource-group trackerappgroup --name trakerapp --query ipAddress.fqdn
+
+17.
+az container logs --resource-group trackerappgroup --name trakerapp
+
+18.
+az group delete --resource-group trackerappgroup 
+
+
+
