@@ -6,11 +6,11 @@ services:
         image: mcr.microsoft.com/mssql/server
         ports: 
             - "1433:1433"
-        # deploy:
-        #     resources: 
-        #         reservations:
-        #             cpus: "2"
-        #             memory: 2GB
+        deploy:
+            resources: 
+                reservations:
+                    cpus: "2"
+                    memory: 2GB
         environment:
             - ACCEPT_EULA=Y
             - MSSQL_SA_PASSWORD=yourStrongPassword12#
@@ -20,10 +20,15 @@ services:
         container_name: web-app
         build:
             dockerfile: ./TaskBoard.WebApp/Dockerfile
-        image: taskboardcr.azure.io/taskboard-image
+        image: taskboardcr.azurecr.io/taskboard-image
         ports: 
-            - "5000:80"
+            - "80:80"
+            # - "5000:80"
         restart: on-failure
 
 volumes:
     sqldata:
+        driver: azure_file
+        driver_opts:
+            share_name: sql-volumes
+            storage_account_name: tasrdstoragghdfgh

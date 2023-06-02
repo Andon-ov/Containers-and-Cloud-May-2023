@@ -27,9 +27,36 @@ change docker-compose.yml
 docker compose build
 
 docker compose push
-    
+
+az acr repository show --name taskboardcr --repository taskboard-image
+
+change docker-compose.yml 
+(add)
+	driver: azure_file
+		driver_opts:
+		    share_name: sql-volumes
+		    storage_account_name: taskboardstorageacc
+
+az login
+docker login 
+docker login azure
+
+
 docker context create aci taskboardcontext
 
 docker context use taskboardcontext
+
+docker compose up
+
+Здравейте имам проблем със 6та задача от : "Exercise: Deployment to Cloud" 
+
+Написъл съм послдователноста да действията ми, а ето го и изхода: docker compose up
+
+Docker Compose's integration for ECS and ACI will be retired in November 2023. Learn more: https://docs.docker.com/go/compose-ecs-eol/
+[+] Running 0/1
+ ⠿ taskboardstoragebigdo  Error                                                                                                          0.1s
+storage.AccountsClient#CheckNameAvailability: Failure responding to request: StatusCode=404 -- Original Error: autorest/azure: Service returned an error. Status=404 Code="SubscriptionNotFound" Message="Subscription 926f046f-9150-4c5b-8002-334a2bc99822 was not found."
+11:52:48 bigdo@bigdo-desktop TaskBoard-ASP.NET-App ±|main ✗|→ 
+
 
 
