@@ -1,0 +1,35 @@
+az login --use-device-code
+
+az group create --name "taskBoardResourceGroup" --location westeurope
+
+az acr create --resource-group taskBoardResourceGroup --name taskboardcr --sku Basic
+
+docker context use default 
+
+az acr login --name taskboardcr
+
+docker compose up --build
+(to try do you app working in our pc)
+
+change docker-compose.yml 
+
+(change) from 5000:80
+	ports: 80:80
+(add)    
+	image: taskboardcr.azure.io/taskboard-image
+(add)   
+	deploy:
+	    resources: 
+		reservations:
+		    cpus: "2"
+		    memory: 2GB
+		    
+docker compose build
+
+docker compose push
+    
+docker context create aci taskboardcontext
+
+docker context use taskboardcontext
+
+
