@@ -1,17 +1,23 @@
-docker build . -t frontend 
+docker build . -t frontend
+ -> Builds a Docker image for the frontend application using the current directory as the build context. The -t flag sets the image name to "frontend".
 
-docker build . -t backend 
+docker build . -t backend
+ -> Builds a Docker image for the backend application using the current directory as the build context. The -t flag sets the image name to "backend".
 
 docker network create react-express
+ -> Creates a Docker network with the name "react-express". This network will be used to connect the frontend and backend containers.
 
 docker network create express-mongo
+ -> Creates a Docker network with the name "express-mongo". This network will be used to connect the backend and MongoDB containers.
 
- docker run -d -v ./data:/data/db --name mongo --network express-mongo mongo   
+docker run -d -v ./data:/data/db --name mongo --network express-mongo mongo
+ -> Runs a MongoDB container named "mongo" in the "express-mongo" network. The -v flag mounts the local directory "./data" as the data volume for the MongoDB container.
 
- docker run -d --name frontend -p 3000:3000 --network react-express frontend 
+docker run -d --name frontend -p 3000:3000 --network react-express frontend
+ -> Runs a container named "frontend" based on the "frontend" image. The container is connected to the "react-express" network and maps port 3000 on the host to port 3000 in the container.
 
- docker run -d --name backend   --network react-express backend
+docker run -d --name backend --network react-express backend
+ -> Runs a container named "backend" based on the "backend" image. The container is connected to the "react-express" network.
 
- docker network connect express-mongo backend 
-
- 
+docker network connect express-mongo backend
+ -> Connects the "backend" container to the "express-mongo" network. This allows the backend container to communicate with the MongoDB container.

@@ -1,35 +1,32 @@
- docker network create mariadb_network 
+docker network create mariadb_network
+ -> Creates a Docker network named "mariadb_network" that will be used for communication between the MariaDB server and client containers.
 
- docker run \
- --detach \
- --name mariadb_server \
- --network mariadb_network \
- --env MARIADB_USER=softuni_user \
- --env MARIADB_PASSWORD=softuni_password \
- --env MARIADB_ROOT_PASSWORD=my-secret-pw  \
- mariadb:latest 
+docker run --detach --name mariadb_server --network mariadb_network --env MARIADB_USER=softuni_user --env MARIADB_PASSWORD=softuni_password --env MARIADB_ROOT_PASSWORD=my-secret-pw mariadb:latest
+ -> Runs a MariaDB server container in detached mode with the name "mariadb_server". It joins the "mariadb_network" network and sets the environment variables for the MariaDB user, password, and root password.
 
- docker run \
- --detach \
- --name mariadb_client \
- --network mariadb_network \
- --env MARIADB_ROOT_PASSWORD=my-secret-pw \
-  mariadb:latest
+docker run --detach --name mariadb_client --network mariadb_network --env MARIADB_ROOT_PASSWORD=my-secret-pw mariadb:latest
+ -> Runs a MariaDB client container in detached mode with the name "mariadb_client". It also joins the "mariadb_network" network and sets the root password environment variable.
 
- docker ps -a 
+docker ps -a
+ -> Lists all running and stopped containers. This command is used to check the status of the containers.
 
- docker network inspect mariadb_network 
+docker network inspect mariadb_network
+ -> Inspects the details of the "mariadb_network" Docker network, including its configuration and connected containers.
 
- docker exec -it mariadb_client bash  
+docker exec -it mariadb_client bash
+ -> Executes an interactive shell session inside the "mariadb_client" container.
 
- ps -ef
+ps -ef
+ -> Lists the running processes inside the container.
 
- mariadb -h mariadb_server -u softuni_user -p
- softuni_password
+mariadb -h mariadb_server -u softuni_user -p softuni_password
+ -> Connects to the MariaDB server running on the host "mariadb_server" using the specified username and password.
 
- SELECT VERSION();
+SELECT VERSION();
+ -> Executes a SQL query to retrieve the version of MariaDB.
 
- exit
+exit
+ -> Exits the MariaDB client shell.
 
- exit
-
+exit
+ -> Exits the interactive shell session inside the "mariadb_client" container.

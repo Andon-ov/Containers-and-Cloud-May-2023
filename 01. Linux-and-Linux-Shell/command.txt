@@ -177,7 +177,8 @@
 "wget -O latest-hugo.zip \nhttps://github.com/gohugoio/hugo/archive/master.zip"
      Downloads a file from a specified URL and saves it with a different name.
 
-
+"nautilus ."
+     Command used to open the Nautilus file manager in the current directory.
 
 Old 
 

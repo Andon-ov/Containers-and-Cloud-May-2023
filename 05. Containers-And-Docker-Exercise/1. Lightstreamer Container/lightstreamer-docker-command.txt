@@ -1,2 +1,6 @@
 sudo docker run -d --name ls-server -p 80:8080 lightstreamer:latest
 
+ -> Cmmand should start the container in detached mode (-d),
+  give it the name "ls-server" (--name ls-server),
+   and map port 80 of the host machine to port 8080 of the container (-p 80:8080).
+

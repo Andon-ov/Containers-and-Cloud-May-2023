@@ -1,1 +1,14 @@
 sudo docker run -d --name ghost-container -e NODE_ENV=development -p 3001:2368 ghost:latest 
+
+sudo docker run
+ -> Starts a new Docker container.
+-d
+ -> Runs the container in detached mode (in the background).
+--name ghost-container
+ -> Specifies the name of the container as "ghost-container".
+-e NODE_ENV=development
+ -> Sets the environment variable NODE_ENV to "development" within the container.
+-p 3001:2368
+ -> Maps port 3001 of the host machine to port 2368 of the container.
+ghost:latest
+ -> Specifies the image to use for the container, in this case, "ghost:latest".

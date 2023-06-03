@@ -24,11 +24,15 @@ volumes:
     sqldata:
 networks:
     taskboard_network:
+
     
-docker compose build  
+docker compose build
+ -> Builds the Docker images defined in your Docker Compose configuration file. It reads the docker-compose.yml file in the current directory and builds the services defined within it.
 
 docker compose up -d
-    
+ -> Starts the containers defined in your Docker Compose configuration file in detached mode. It creates and runs the containers in the background. The services will be started based on the configurations specified in the docker-compose.yml file.
+
 docker compose down --rmi all --volumes
+ -> Stops and removes the containers, networks, and volumes defined in your Docker Compose configuration file. The --rmi all option removes any images that were built during the docker compose build process. The --volumes option removes any volumes associated with the services.
     
 

@@ -1,3 +1,8 @@
-docker build -t bloodtaint/taskboad_app .
+docker build -t bloodtaint/taskboard_app .
+ -> Builds a Docker image with the tag "bloodtaint/taskboard_app". The . at the end specifies the build context, which is the current directory.
+
 docker login
-docker push bloodtaint/taskboad_app
+ -> Logs in to a Docker registry. This command prompts you to enter your Docker Hub credentials (username and password) or the credentials for the specified registry.
+
+docker push bloodtaint/taskboard_app
+ -> Pushes the locally built Docker image with the tag "bloodtaint/taskboard_app" to the Docker registry. This makes the image accessible to other users and allows it to be pulled and run on other machines.

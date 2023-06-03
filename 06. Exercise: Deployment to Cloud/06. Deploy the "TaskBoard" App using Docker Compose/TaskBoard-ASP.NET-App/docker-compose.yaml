@@ -30,5 +30,5 @@ volumes:
     sqldata:
         driver: azure_file
         driver_opts:
-            share_name: sql-volumes
-            storage_account_name: tasrdstoragghdfgh
+            share_name: sql-volume
+            storage_account_name: taskboardcrbaido

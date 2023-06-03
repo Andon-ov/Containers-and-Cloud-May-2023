@@ -1,10 +1,13 @@
 1. MyWebsite App: Building a Custom Image
 
 mkdir MyWebsite
+
 cd MyWebsite/
 
 sudo npm i -g @vue/cli-init
+
 sudo vue init browserify .
+
 sudo npm install
 
 change localhost from package.json  to 0.0.0.0
@@ -14,12 +17,15 @@ make container witout Dokerfile with same steps
 docker run -it -p 8080:8080 node:16 bash
 
 mkdir app
+
 cd app
 
 docker cp . nice_jang:/app/ 
 
 du -hs
+
 npm install
+
 npm run dev
 
 

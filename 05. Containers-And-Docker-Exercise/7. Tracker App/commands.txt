@@ -1,2 +1,5 @@
 docker build -t tracker_app .
+ -> Builds a Docker image with the tag "tracker_app". The . at the end specifies the build context, which is the current directory. Make sure you run this command in the directory where your Dockerfile is located.
+
 docker run --detach -p 8080:80 tracker_app
+ -> Runs a Docker container based on the "tracker_app" image. The --detach flag detaches the container and runs it in the background. The -p 8080:80 flag maps port 8080 on the host to port 80 in the container, allowing you to access the containerized application at http://localhost:8080.

@@ -1,1 +1,14 @@
 docker run -d --name my-apache-app -p 8080:80 -v /home/baido/test:/usr/local/apache2/htdocs/ httpd:latest   
+
+docker run
+ -> Starts a new Docker container.
+-d
+ -> Runs the container in detached mode (in the background).
+--name my-apache-app
+ -> Specifies the name of the container as "my-apache-app".
+-p 8080:80
+ -> Maps port 8080 of the host machine to port 80 of the container. This means you can access the Apache web server running inside the container by visiting http://localhost:8080 in your web browser.
+-v /home/baido/test:/usr/local/apache2/htdocs/
+ -> Mounts the local directory /home/baido/test into the container at /usr/local/apache2/htdocs/. This allows you to serve the files from the local directory using the Apache web server inside the container.
+httpd:latest
+ -> Specifies the image to use for the container, in this case, "httpd:latest", which is the official Apache HTTP Server image.
