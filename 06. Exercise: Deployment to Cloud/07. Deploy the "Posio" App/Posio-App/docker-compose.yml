@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: posioappcr.azurecr.io/posio-app:latest
+    ports:
+      - 5000:5000
+    environment:
+      - POSIO_SETTINGS=/app/config.py
+      - REGISTRY_LOGIN_SERVER=posioappcr.azurecr.io
+      - REGISTRY_USERNAME=posioappcr
+      - REGISTRY_PASSWORD=NVXeHAR3Fx7m+pch9ujpTAvYdS3VbJ0lV5AAUaQM9P+ACRBltGLa
+    volumes:
+      - posio-volume:/mnt/azure
+    # hostname: myfqdn.example.com
+
+volumes:
+  posio-volume:
+    driver: azure_file
+    driver_opts:
+      share_name: posio-volume
+      storage_account_name: posioaccountname
+      # storage_account_key: <posio-account-key>

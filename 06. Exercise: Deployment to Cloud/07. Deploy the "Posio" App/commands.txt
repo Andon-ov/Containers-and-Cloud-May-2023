@@ -1,0 +1,99 @@
+az login && docker login && docker login azure
+     -> This command sequence performs Azure login, Docker login, and Docker login to 
+     Azure Container Registry (ACR) in order to authenticate with the required services.
+
+az group create --name 'posio-app-resource-group' --location westeurope
+     -> This command creates an Azure resource group named 'posio-app-resource-group' in the 'westeurope' region.
+      Resource groups are logical containers for organizing and managing Azure resources.
+
+az acr create --resource-group posio-app-resource-group --name posioappcr --sku Basic
+     -> This command creates an Azure Container Registry (ACR) named 'posioappcr' in the 'posio-app-resource-group' 
+     resource group with the 'Basic' SKU. ACR is a private registry for storing and managing container images.
+
+az acr login --name posioappcr
+     -> This command logs you into the specified ACR ('posioappcr') to authenticate Docker with the registry. 
+     It sets up the necessary authentication tokens for pushing and pulling images.
+
+docker compose build
+     -> This command builds the Docker images defined in your Docker Compose file without starting the services. 
+     It will create the images based on the provided build context and Dockerfile.
+     docker compose up --build -> This command builds and runs your application using Docker Compose locally. 
+
+docker compose push
+     -> This command pushes the built Docker images to the registry specified in your Docker Compose file. 
+     It pushes the images to the corresponding repository in the ACR for future deployment.
+
+az acr repository show --name posioapp --repository posioappcr
+     -> This command shows information about the specified repository ('posioappcr') in the ACR named 'posioapp'. 
+     It provides details such as the image tags, size, and creation date.
+
+docker context create aci posioappcontext && docker context use posioappcontext
+     -> These commands create an Azure Container Instances (ACI) context named 'posioappcontext' 
+     and set it as the active Docker context. It allows you to deploy your application to ACI using Docker Compose.
+
+docker compose up
+     -> This command deploys your application to Azure Container Instances (ACI) using the active Docker context. 
+     It creates and starts the services defined in your Docker Compose file in the ACI environment.
+
+     Access the app on {IP Address}:5000 and play the game.
+     You can use the docker ps command to get the IP address of the container group.
+
+################################
+Make it with Dockerfile.
+
+docker build -t posio-app .
+ -> Builds a Docker image based on the Dockerfile in the current directory.
+Info: The -t flag assigns a tag (posio-app) to the built image.
+
+docker run -d -p 5000:5000 --name posio-app posio-app
+ -> Runs a container from the posio-app image in detached mode (-d), mapping port 5000 from the container to the host.
+Info: The --name flag assigns a name (posio-app) to the running container.
+
+docker login
+ -> Authenticates Docker with the default registry (e.g., Docker Hub) using your Docker Hub credentials.
+Info: Required to push and pull images from the registry.
+
+docker login azure
+ -> Authenticates Docker with Azure Container Registry (ACR) using your Azure credentials.
+Info: Required to push and pull images from the ACR.
+
+az login
+ -> Initiates the Azure login process using the default authentication method.
+Info: Opens a web browser where you can enter your Azure credentials and authenticate with Azure.
+
+az group create --name 'posio-app-resource-group' --location westeurope
+ -> Creates an Azure resource group named 'posio-app-resource-group' in the 'westeurope' region.
+Info: Resource groups provide logical containers for Azure resources.
+
+az acr create --resource-group posio-app-resource-group --name posioappcr --sku Basic
+ -> Creates an Azure Container Registry (ACR) named 'posioappcr' in the 'posio-app-resource-group' resource group with the 'Basic' SKU.
+Info: ACR is a private registry for storing and managing Docker container images.
+
+az acr login --name posioappcr
+ -> Logs you into the specified ACR ('posioappcr') to authenticate Docker with the registry.
+Info: Sets up the necessary authentication tokens for pushing and pulling images.
+
+az acr show --name posioappcr --query loginServer
+ -> Retrieves the login server URL for the specified ACR ('posioappcr').
+Info: The login server URL is used to tag and push Docker images to the ACR.
+
+docker image tag posio-app posioappcr.azurecr.io/posio-app
+ -> Tags the posio-app image with the ACR repository URL and tag.
+Info: Prepares the image for pushing it to the ACR.
+
+docker push posioappcr.azurecr.io/posio-app
+ -> Pushes the posio-app image to the specified ACR repository.
+Info: Makes the Docker image available in the ACR for deployment.
+
+az acr show --name posioappcr
+ -> Retrieves information about the specified ACR ('posioappcr'), including its login server and other details.
+Info: Verifies the existence and retrieves details of the ACR.
+
+az acr repository list --name posioappcr
+ -> Lists the repositories available in the specified ACR ('posioappcr').
+Info: Shows the available Docker image repositories in the ACR.
+
+az container create --resource-group posio-app-resource-group --name posioapp --image posioappcr.azurecr.io/posio-app:latest --cpu 1 --memory 2 --registry-login-server posioappcr.azurecr.io --registry-username posioappcr --registry-password NVXeHAR3Fx7m+pch9ujpTAvYdS3VbJ0lV5AAUaQM9P+ACRBltGLa --ip-address Public --dns-name-label posio-app --ports 5000 --azure-file-volume-account-name posioaccountname --azure-file-volume-share-name posio-volume --azure-file-volume-mount-path /mnt/azure:
+ -> Creates an Azure Container Instance (ACI) named 'posioapp' in the specified resource group, using the provided image, CPU, memory, and network settings.
+Info: The --azure-file-volume-* options specify the configuration for mounting an Azure File Share volume to the container.
+
