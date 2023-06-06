@@ -30,10 +30,10 @@ npm run dev
 
 
 Navigate to the MyWebsite directory
-● Use the docker image build command to build the image
-● Set the local directory as the working directory
-● With the -f option, set the path to the Dockerfile
-● With the -t option, set the name of the image in format {your_docker_hub_username}/{app_name},as we will later add our image to Docker Hub
+Use the docker image build command to build the image
+Set the local directory as the working directory
+With the -f option, set the path to the Dockerfile
+With the -t option, set the name of the image in format {your_docker_hub_username}/{app_name},as we will later add our image to Docker Hub
 
 
 touch Dockerfile
@@ -47,21 +47,32 @@ command need to be: docker run -d -P mywebsite
 and we got random port
 
 
-this is a Dokerfile
+################  Dokerfile  #################
 
+# Use the official Node.js 16 image as the base image
 FROM node:16
 
-#EXPOSE 8080
-
+# Set the working directory inside the container
 WORKDIR /app
 
+# Copy the package.json and package-lock.json files to the working directory
+# COPY package*.json ./
+
+# Copy all files and folders to the working directory
 COPY . .
 
+
+# Expose the port that the Vue.js app will run on
+EXPOSE 8080
+
+# Install the dependencies
 RUN npm install
 
+# Run the development server
 # CMD [ "npm", "run", "dev" ]
-ENTRYPOINT npm run dev%   
+ENTRYPOINT npm run dev  
 
+###############################################
 
 Publish the image
 
@@ -78,19 +89,17 @@ docker push  bloodtaint/mywebsite
 
 docker network create my_network   
 
-docker run -dit → runs the image detached and in interactive mode;
-• --name wordpress_db → names the container wordpress_db;
-• -e MYSQL_ROOT_PASSWORD=pass → sets the password for the root MySQL user;
-• -e MYSQL_DATABASE=wordpressdb → sets the name of the MySQL database that we'll use for the
-WordPress installation;
-• -e MYSQL_USER=wordpress → sets the MySQL user that we'll use for the WordPress installation;
-• -e MYSQL_PASSWORD=wordpress → sets the password for that user;
-• --expose 3306 → sets the port of the container;
-• --expose 33060 → sets the SSL port of the container;
-• --network my_network → sets the network that we want to attach our container to;
-• -v ${PWD}/data:/var/lib/mysql → maps the directory on our local machine to the directory of the
-container, so that we can store data outside of it;
-• mysql → the name of the ima
+docker run -dit                   -> runs the image detached and in interactive mode;
+--name wordpress_db               -> names the container wordpress_db;
+ -e MYSQL_ROOT_PASSWORD=pass      -> sets the password for the root MySQL user;
+ -e MYSQL_DATABASE=wordpressdb    -> sets the name of the MySQL database that we'll use for theWordPress installation;
+ -e MYSQL_USER=wordpress          -> sets the MySQL user that we'll use for the WordPress installation;
+ -e MYSQL_PASSWORD=wordpress      -> sets the password for that user;
+ --expose 3306                    -> sets the port of the container;
+ --expose 33060                   -> sets the SSL port of the container;
+ --network my_network             -> sets the network that we want to attach our container to;
+ -v ${PWD}/data:/var/lib/mysql    -> maps the directory on our local machine to the directory of thecontainer, so that we can store data outside of it;
+ mysql                            -> the name of the ima
 
 
 docker run -dit \
