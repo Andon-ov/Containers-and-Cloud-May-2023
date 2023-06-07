@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "blackbox"
+    metrics_path: /probe
+    static_configs:
+      - targets:
+          - https://softuni.org
+    params:
+      module: [http_2xx]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 1270.0.0.1:9115
+        # replacement: blackbox-exporter:9115
