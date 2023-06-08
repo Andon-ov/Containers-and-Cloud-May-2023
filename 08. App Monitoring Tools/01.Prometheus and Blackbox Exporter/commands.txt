@@ -1,0 +1,165 @@
+docker run -d -p 9115:9115 --name=blackbox-exporter prom/blackbox-exporter
+
+localhost:9115/probe?target=http://softuni.org
+
+
+
+wget https://github.com/prometheus/prometheus/releases/download/v2.45.0-rc.0/prometheus-2.45.0-rc.0.linux-amd64.tar.gz
+
+tar xvfz prometheus-2.45.0-rc.0.linux-amd64.tar.gz
+
+cd prometheus-2.45.0-rc.0.linux-amd64
+
+sudo mkdir /opt/prometheus
+
+sudo mv * /opt/prometheus
+
+sudo chown -R <your_username>:<your_username> /opt/prometheus
+
+sudo ln -s /opt/prometheus/prometheus /usr/local/bin/prometheus
+
+Create the prometheus.service file:
+
+[Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/opt/prometheus/prometheus
+Restart=always
+
+[Install]
+WantedBy=default.target
+
+
+sudo mv prometheus.service /etc/systemd/system/
+
+Create the prometheus.yml file:
+
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+        - https://softuni.org
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115
+
+sudo mkdir /etc/prometheus
+
+sudo mv prometheus.yml /etc/prometheus/
+
+sudo systemctl start prometheus
+sudo systemctl enable prometheus
+sudo systemctl status prometheus
+
+Now you should be able to access the Prometheus web interface at http://127.0.0.1:9115/
+
+
+info #######################################################################################################################
+
+    wget https://github.com/prometheus/prometheus/releases/download/v2.45.0-rc.0/prometheus-2.45.0-rc.0.linux-amd64.tar.gz
+        wget: Command-line utility to download files from the web.
+        https://github.com/prometheus/prometheus/releases/download/v2.45.0-rc.0/prometheus-2.45.0-rc.0.linux-amd64.tar.gz: The URL of the file you want to download.
+
+    This command downloads the Prometheus binary release package in a compressed tar.gz format.
+
+    tar xvfz prometheus-2.45.0-rc.0.linux-amd64.tar.gz
+        tar: Command-line utility to manipulate tar archives.
+        xvfz: Options used with the tar command:
+            x: Extract the files from the archive.
+            v: Verbosely show the extraction progress.
+            f: Specify the archive file to extract.
+            z: Filter the archive through gzip.
+
+    This command extracts the contents of the downloaded Prometheus tar.gz archive.
+
+    cd prometheus-2.45.0-rc.0.linux-amd64
+        cd: Command to change the current working directory.
+        prometheus-2.45.0-rc.0.linux-amd64: The directory name you want to change to.
+
+    This command navigates into the extracted Prometheus directory.
+
+    sudo mkdir /opt/prometheus
+        sudo: Command to run the subsequent command as a superuser (root).
+        mkdir: Command to create a new directory.
+        /opt/prometheus: The path of the directory you want to create.
+
+    This command creates a directory named "prometheus" inside the "/opt" directory.
+
+    sudo mv * /opt/prometheus
+        mv: Command to move files and directories.
+        *: Wildcard character representing all files and directories in the current directory.
+        /opt/prometheus: The destination directory.
+
+    This command moves all files and directories from the current directory to the "/opt/prometheus" directory.
+
+    sudo chown -R <your_username>:<your_username> /opt/prometheus
+        chown: Command to change the ownership of files and directories.
+        -R: Option to perform the ownership change recursively (including subdirectories and files).
+        <your_username>:<your_username>: The username and group name you want to set as the owner.
+        /opt/prometheus: The directory you want to change the ownership of.
+
+    This command sets the ownership of the "/opt/prometheus" directory (and its contents) to your username and group.
+
+    Create a file named prometheus.service with the provided content:
+        This step involves creating a text file named prometheus.service and adding the specified content to it. The content defines a systemd service unit for Prometheus.
+
+    sudo mv prometheus.service /etc/systemd/system/
+        sudo: Command to run the subsequent command as a superuser (root).
+        mv: Command to move files and directories.
+        prometheus.service: The file you want to move.
+        /etc/systemd/system/: The destination directory.
+
+    This command moves the prometheus.service file to the /etc/systemd/system/ directory.
+
+    Create the prometheus.yml file with the provided content:
+        This step involves creating a text file named prometheus.yml and adding the specified content to it. The content defines the Prometheus configuration.
+
+    sudo mkdir /etc/promethe
+        mkdir: Command to create a new directory.
+        /etc/prometheus: The path of the directory you want to create.
+
+    This command creates a directory named "prometheus" inside the "/etc" directory.
+
+    sudo mv prometheus.yml /etc/prometheus/
+        mv: Command to move files and directories.
+        prometheus.yml: The file you want to move.
+        /etc/prometheus/: The destination directory.
+
+    This command moves the prometheus.yml file to the /etc/prometheus/ directory.
+
+    sudo systemctl start prometheus
+        systemctl: Command to control the systemd system and service manager.
+        start: Option to start a systemd service.
+        prometheus: The name of the service to start.
+
+    This command starts the Prometheus service.
+
+    sudo systemctl enable prometheus
+        systemctl: Command to control the systemd system and service manager.
+        enable: Option to enable a systemd service.
+        prometheus: The name of the service to enable.
+
+    This command enables the Prometheus service to start automatically on system boot.
+
+    sudo systemctl status prometheus
+        systemctl: Command to control the systemd system and service manager.
+        status: Option to display the status of a systemd service.
+        prometheus: The name of the service to check.
+
+    This command displays the status of the Prometheus service.
+
+After completing these steps, you should be able to access the Prometheus web interface at http://127.0.0.1:9115/.
+##################################################################################################################

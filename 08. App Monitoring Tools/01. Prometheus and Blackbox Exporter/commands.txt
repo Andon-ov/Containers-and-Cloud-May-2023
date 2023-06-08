@@ -1,6 +1,0 @@
-docker run -d -p 9115:9115 --name=blackbox-exporter prom/blackbox-exporter
-
-localhost:9115/probe?target=http://softuni.org
-
-
-
