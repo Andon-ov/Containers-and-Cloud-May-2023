@@ -1,0 +1,11 @@
+mkdir '2. Azure Web App'
+cd '2. Azure Web App'
+
+touch main.tf 
+code main.tf 
+
+terraform init
+terraform fmt
+terraform validate
+terraform apply
+terraform destroy

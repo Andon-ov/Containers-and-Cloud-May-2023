@@ -1,0 +1,39 @@
+mkdir '1. Azure Resource Group'
+cd '1. Azure Resource Group'
+ -> Create the folder named "1. Azure Resource Group" and navigate to it
+
+touch main.tf
+ -> Create a new file named main.tf in the "1. Azure Resource Group" folder
+
+code main.tf
+ -> Open the main.tf file using Visual Studio Code
+
+az login
+ -> Command is used to authenticate and log in to your Azure account. 
+ It opens a browser window where you can enter your Azure credentials. 
+ After successful authentication, you'll be logged in to Azure CLI.
+
+terraform init
+ -> Command initializes a Terraform working directory. 
+ It downloads and installs the necessary providers and modules defined in your Terraform 
+ configuration files (usually in the form of *.tf files). Navigate to the directory where your Terraform
+ configuration files are located and run this command.
+
+terraform fmt
+ -> Command automatically formats your Terraform configuration files to ensure consistent code style.
+  It updates the files in place, so make sure to have a backup if needed. Execute this command in the same
+   directory where your Terraform configuration files are located.
+
+terraform validate
+ -> Command checks your Terraform configuration files for any syntax errors and validates the configuration.
+  It ensures that all required values are properly set. Run this command in the same directory as your
+ Terraform configuration files.
+
+terraform apply
+ -> Command creates or updates infrastructure resources according to your Terraform configuration files.
+  Before running this command, make sure you have reviewed and understood the changes that will be
+   applied to your infrastructure. It will prompt for confirmation before proceeding.
+
+terraform destroy
+ -> Command is a destructive operation, and it will permanently delete the specified resources. 
+ Make sure you understand the consequences before executing this command.
