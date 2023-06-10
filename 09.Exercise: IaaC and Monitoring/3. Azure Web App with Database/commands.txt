@@ -1,0 +1,26 @@
+mkdir '3. Azure Web App with Database'
+cd 3.\ Azure\ Web\ App\ with\ Database/
+
+touch main.tf
+code main.tf 
+
+Create GitHub repo with name TaskBoard
+git clone ...
+
+cd TaskBoard/
+git add .
+git commit -m 'initial commit'
+git push
+
+terraform init
+terraform fmt
+terraform validate
+terraform apply
+terraform destroy
+
+touch variables.tf values.tfvars outputs.tf
+terraform init
+terraform fmt -recursive
+terraform validate
+terraform apply -var-file="values.tfvars"
+terraform destroy -var-file="values.tfvars"
