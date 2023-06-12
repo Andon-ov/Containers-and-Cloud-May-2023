@@ -1,0 +1,72 @@
+Step 1: Configure and Run Alertmanager
+
+Create alertmanager-contact-book.yml
+################################
+route:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+  receiver: 'web.hook'
+
+receivers:
+  - name: 'web.hook'
+    webhook_configs:
+      - url: 'https://webhook.site/...'
+
+################################
+
+Go to https://webhook.site/ and add entry here: https://webhook.site/...
+
+run  alertmanager --config.file /etc/alertmanager/alertmanager-contact-book.yml
+
+Go to http://localhost:9093 in the browser and you should see that Alertmanager is up and working
+
+Step 2: Configure and Run Prometheus
+
+Create cat alert-rules-contact-book.yaml 
+
+################################
+groups:
+- name: Page access 3 times for 5 minutes
+  rules:
+
+  # Alert for any instance that is unreachable for >5 minutes.
+  - alert: PageAccess3TimesFor5Minutes
+    expr: changes(http_request_duration_seconds_count[5m]) >= 3
+    for: 10s
+    labels:
+      severity: warning
+    annotations:
+      summary: "Page access 3 times for 5 minutes"
+
+################################
+
+
+Create prometheus-contact-book-alert.yaml
+
+################################
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - alert-rules-contact-book.yaml
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - localhost:9093
+
+scrape_configs:
+  - job_name: 'contact-book'
+
+    static_configs:
+      - targets: ["localhost:8080"]
+
+################################
+
+prometheus config.file /etc/prometheus/prometheus-contact-book-alert.yaml
+
+
