@@ -1,0 +1,10 @@
+After start Grafana
+
+http://localhost:3000/login
+
+user: admin
+pass: my
+
+connection / add new connection
+prometheus
+

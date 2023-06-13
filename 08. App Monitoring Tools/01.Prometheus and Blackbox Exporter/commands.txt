@@ -1,8 +1,11 @@
 docker run -d -p 9115:9115 --name=blackbox-exporter prom/blackbox-exporter
+    run blackbox-exporter in docker container 
 
 localhost:9115/probe?target=http://softuni.org
+    give target for a blackbox-exporter = http://softuni.org
 
 
+Download prometheus
 
 wget https://github.com/prometheus/prometheus/releases/download/v2.45.0-rc.0/prometheus-2.45.0-rc.0.linux-amd64.tar.gz
 
@@ -36,18 +39,25 @@ WantedBy=default.target
 sudo mv prometheus.service /etc/systemd/system/
 
 Create the prometheus.yml file:
-
+###################################
 global:
-  scrape_interval: 15s
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+
 
 scrape_configs:
-  - job_name: 'blackbox'
+
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+
+  - job_name: "blackbox"
     metrics_path: /probe
-    params:
-      module: [http_2xx]
     static_configs:
       - targets:
-        - https://softuni.org
+          - https://softuni.org
+
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -56,13 +66,15 @@ scrape_configs:
       - target_label: __address__
         replacement: 127.0.0.1:9115
 
+
+##################################
 sudo mkdir /etc/prometheus
 
 sudo mv prometheus.yml /etc/prometheus/
 
-sudo systemctl start prometheus
-sudo systemctl enable prometheus
-sudo systemctl status prometheus
+sudo systemctl start prometheus.service  
+sudo systemctl enable prometheus.service  
+sudo systemctl status prometheus.service  
 
 Now you should be able to access the Prometheus web interface at http://127.0.0.1:9115/
 
@@ -163,3 +175,11 @@ info ###########################################################################
 
 After completing these steps, you should be able to access the Prometheus web interface at http://127.0.0.1:9115/.
 ##################################################################################################################
+
+sudo apt install prometheus
+ls -l /var/lib/prometheus/metrics2
+sudo chown -R prometheus:prometheus /var/lib/prometheus/metrics2
+sudo systemctl start prometheus.service
+sudo systemctl status  prometheus.service
+
+prometheus 

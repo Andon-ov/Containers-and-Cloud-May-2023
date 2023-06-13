@@ -1,0 +1,93 @@
+Create alertmanager-blackbox.yml:
+
+alertmanager-blackbox.yml
+##################################################
+route:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 2m
+  receiver: 'web.hook'
+
+receivers:
+  - name: 'web.hook'
+    webhook_configs:
+      - url: 'https://webhook.site/...'
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']
+
+##################################################
+
+Create alert-rules-blackbox.yaml
+
+##################################################
+
+groups:
+  - name: Connection was slow
+    rules:
+      - alert: SlowConnection
+        expr: probe_http_duration_seconds{phase="connect"} > 0.0025
+        for: 3s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Connection took more than 2.5 milliseconds"
+
+##################################################
+
+Edit prometheus-blackbox.yaml
+
+##################################################
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          -  localhost:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  - "alert-rules-blackbox.yaml"
+
+
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "blackbox"
+    metrics_path: /probe
+    static_configs:
+      - targets:
+          - https://softuni.org
+
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115
+
+##################################################
+
+
+
+First start alertmanager:
+sudo alertmanager --config.file /etc/alertmanager/alertmanager-blackbox.yml 
+
+Second start prometheus:
+sudo prometheus --config.file /etc/prometheus/prometheus-blackbox.yaml
+
+Chek alert in prometheus: http://localhost:9090/classic/alerts
+Chek alert in alertmanager http://localhost:9093/#/alerts
+Chek alert in https://webhook.site/#!/...
