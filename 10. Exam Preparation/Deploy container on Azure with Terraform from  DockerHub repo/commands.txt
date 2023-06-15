@@ -1,0 +1,47 @@
+Create public repositories in dockerhub
+
+change in app appsettings.json
+"DefaultConnection": "Server=sqlserver;Database=Library;User Id=sa;Password=yourStrongPassword12#;MultipleActiveResultSets=true;"
+    to
+"DefaultConnection": "Server=127.0.0.1;Database=Library;User Id=sa;Password=yourStrongPassword12#;MultipleActiveResultSets=true;"
+
+
+docker build -t bloodtaint/library .
+
+docker push bloodtaint/library
+
+
+terraform init
+terraform fmt
+terraform validate
+terraform apply
+
+go to azure and found storage account
+go in and select File service
+click on librarybaido-share after that click to connect
+select your operating system -> i select linux and get script:
+
+"
+sudo mkdir /mnt/librarybaido-share
+if [ ! -d "/etc/smbcredentials" ]; then
+sudo mkdir /etc/smbcredentials
+fi
+if [ ! -f "/etc/smbcredentials/librarybaido.cred" ]; then
+    sudo bash -c 'echo "username=librarybaido" >> /etc/smbcredentials/librarybaido.cred'
+    sudo bash -c 'echo "password=RpAQZhQhrAT/bJzd8ckvFrGSnmZTH3VELBdmmV/AQ+MX9x+huJT2EwXOmoKf5a2PsyKcsN3UPmOW+AStjhr9Ng==" >> /etc/smbcredentials/librarybaido.cred'
+fi
+sudo chmod 600 /etc/smbcredentials/librarybaido.cred
+
+sudo bash -c 'echo "//librarybaido.file.core.windows.net/librarybaido-share /mnt/librarybaido-share cifs nofail,credentials=/etc/smbcredentials/librarybaido.cred,dir_mode=0777,file_mode=0777,serverino,nosharesock,actimeo=30" >> /etc/fstab'
+sudo mount -t cifs //librarybaido.file.core.windows.net/librarybaido-share /mnt/librarybaido-share -o credentials=/etc/smbcredentials/librarybaido.cred,dir_mode=0777,file_mode=0777,serverino,nosharesock,actimeo=30
+"
+paste this in you cli
+
+i cant run that script got error:
+
+aplication works properly!
+
+terraform destroy
+
+
+

@@ -1,0 +1,5 @@
+resource_group_name     = "baido-Library"
+resource_group_location = "West Europe"
+app_service_plan_name   = "baido-library-plan"
+app_service_name        = "baido-library"
+repo_URL                = "https://github.com/nakov/ContactBook"

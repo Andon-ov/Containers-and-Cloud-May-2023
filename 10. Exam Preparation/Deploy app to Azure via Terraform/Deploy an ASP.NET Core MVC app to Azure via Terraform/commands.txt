@@ -1,0 +1,34 @@
+Create GitHub repo with name Library
+git clone ...
+
+to main.tf connection srting we use  "DefaultConnection": "Server=sqlserver;Database=Library;User Id=sa;Password=yourStrongPassword12#;MultipleActiveResultSets=true;"
+    from app/appsettings.json
+
+edit values.tfvars and add app name library
+###############################
+resource_group_name     = "baido-Library"
+resource_group_location = "West Europe"
+app_service_plan_name   = "baido-library-plan"
+app_service_name        = "baido-library"
+sql_server_name         = "baido-library-sql"
+sql_database_name       = "LibraryDB"
+sql_admin_login         = "4dm1n157r470r"
+sql_admin_password      = "4-v3ry-53cr37-p455w0rd"
+firewall_rule_name      = "baidoLibraryFW"
+repo_URL                = ""
+###############################
+
+add files in Library folder
+
+git add .
+git commit -m 'initial commit'
+git push
+
+write repo_URL ="https://github.com/Andon-ov/Library"
+    repo name witout .git
+
+terraform init
+terraform fmt -recursive
+terraform validate
+terraform apply -var-file="values.tfvars" -auto-approve
+terraform destroy -var-file="values.tfvars"

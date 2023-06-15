@@ -1,0 +1,155 @@
+Can i make nice folder name because folder name make a container instances name in azure!!!
+	baido-docker-solution
+First make a Dockerfile
+
+#################################
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+EXPOSE 80
+EXPOSE 443
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["Library/Library.csproj", "Library/"]
+COPY ["Library.Data/Library.Data.csproj", "Library.Data/"]
+RUN dotnet restore "Library/Library.csproj"
+COPY . .
+WORKDIR "/src/Library"
+RUN dotnet build "Library.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Library.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Library.dll"]
+
+#################################
+The docker file should be in the outermost directory!!!
+
+Build image from Dockerfile
+
+docker build -t myapp .
+
+docker run myapp
+	- to try do you myapp working in our pc 
+
+Make docker-compose.yml
+chek appsettings.json to see how to myapp connect to the base
+#################################
+version: "3.8"
+
+services: 
+    sqlserver:
+        container_name: sqlserver
+        image: mcr.microsoft.com/mssql/server
+        ports: 
+            - "1433:1433"
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=yourStrongPassword12#
+        volumes: 
+            - sqldata:/var/opt/mssql/server
+
+    web-app:
+        container_name: web-app
+        build:
+            dockerfile: ./Dockerfile
+        ports: 
+            - "80:80"
+        restart: on-failure
+ volumes:
+     sqldata:
+
+#################################
+
+Chek docker-compose work properly - run in our pc for test
+
+docker compose up -d
+
+chek http://localhost/
+
+docker ps -a
+	chek our app work properly
+
+docker compose down --volumes
+
+
+az login
+
+# az login --use-device-code
+# docker login 
+# docker login azure
+
+az group create --name baidolibraryrg --location westeurope
+
+az acr create --resource-group baidolibraryrg --name baidolibrarycr --sku Basic
+
+	chek in azure for resource group baidolibraryrg and container registry baidolibrarycr
+
+docker tag myapp baidolibrarycr.azurecr.io/library
+
+az acr login --name baidolibrarycr
+
+	if login success can push image
+
+docker push baidolibrarycr.azurecr.io/library
+
+Edit docker-compose.yml file to upload on azure
+
+#################################
+version: "3.8"
+
+services: 
+    sqlserver:
+        container_name: sqlserver
+        image: mcr.microsoft.com/mssql/server
+        ports: 
+            - "1433:1433"
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=yourStrongPassword12#
+        volumes: 
+            - sqldata:/var/opt/mssql/server
+        deploy:
+            resources: 
+                reservations:
+                    cpus: "2"
+                    memory: 2GB
+    web-app:
+        container_name: web-app
+        domainname: baido-library
+        image: baidolibrarycr.azurecr.io/library
+        ports: 
+            - "80:80"
+        restart: on-failure
+
+volumes:
+    sqldata:
+        driver: azure_file
+        driver_opts:
+            share_name: sql-volume
+            storage_account_name: baidolibrarystorageacc
+
+
+#################################
+
+docker context create aci librarycontext
+
+docker context use librarycontext
+
+docker compose up -d
+
+if our app working after deployment and run we can make a screenshot
+
+docker context use default 
+
+
+
+az acr login --name taskboardcr
+
+docker compose up --build
+(to try do you app working in our pc)
+
