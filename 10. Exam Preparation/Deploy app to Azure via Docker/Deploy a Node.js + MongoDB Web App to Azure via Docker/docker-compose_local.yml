@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  #mongo database service
+  mongodb:
+    container_name: 'database_container'
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongoDB:/data/db
+  
+  #nodeJd service
+  node:
+    build: .
+    ports:
+      - 8000:3000
+    environment:
+      PORT: 3000
+      DB_URI: mongodb://mongoDB:27017
+      SESSION_SECRET: expressSessionSecret
+    depends_on:
+      - mongodb
+
+volumes:
+  mongoDB: {}

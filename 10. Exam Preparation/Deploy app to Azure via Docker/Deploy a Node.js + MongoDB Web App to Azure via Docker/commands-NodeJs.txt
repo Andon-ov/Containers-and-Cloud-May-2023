@@ -1,0 +1,153 @@
+Can i make nice folder name because folder name make a container instances name in azure!!!
+	baido-docker-solution
+First make a Dockerfile
+
+#################################
+# Using Node.js image as base
+FROM node:alpine
+
+# Create the application directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json .
+
+# Install the dependencies
+RUN npm install
+
+# Copy the rest of the application files
+COPY . .
+
+# Command to start the application
+CMD [ "npm", "start" ]
+
+#################################
+The docker file should be in the outermost directory!!!
+
+Build image from Dockerfile
+
+docker build -t myapp .
+
+docker run myapp
+	- to try do you myapp working in our pc 
+
+Make docker-compose.yml
+chek appsettings.json to see how to myapp connect to the base
+#################################
+
+version: '3.9'
+
+services:
+  # MongoDB database service
+  mongodb:
+    container_name: 'database_container'  # Sets the name of the MongoDB container
+    image: mongo:latest  # Specifies the Docker image to use for MongoDB (latest version)
+    restart: always  # Configures the container to always restart if it stops
+    volumes:
+      - mongoDB:/data/db  # Mounts a volume named 'mongoDB' to persist MongoDB data
+
+  # Node.js service
+  node:
+    build: .  # Specifies to build the Docker image using the Dockerfile in the current directory
+    ports:
+      - 8000:3000  # Maps the host's port 8000 to the container's port 3000
+    environment:
+      PORT: 3000  # Sets the environment variable 'PORT' to 3000 within the container
+      DB_URI: mongodb://mongoDB:27017  # Sets the environment variable 'DB_URI' with the MongoDB connection URI
+      SESSION_SECRET: expressSessionSecret  # Sets the environment variable 'SESSION_SECRET' with a session secret value
+    depends_on:
+      - mongodb  # Specifies that the 'node' service depends on the 'mongodb' service
+
+volumes:
+  mongoDB: {}  # Creates an empty volume named 'mongoDB' to be used by the 'mongodb' service
+
+#################################
+
+Chek docker-compose work properly - run in our pc for test
+
+docker compose up -d
+
+chek http://localhost:8000/
+
+docker ps -a
+	chek our app work properly
+
+docker compose down 
+
+
+az login
+
+# az login --use-device-code
+# docker login 
+# docker login azure
+
+az group create --name baido-node-mongo --location westeurope
+
+az acr create --resource-group baido-node-mongo --name baidonodemongocr --sku Basic
+
+	chek in azure for resource group baido-node-mongo and container registry baidonodemongocr
+
+docker tag myapp baidonodemongocr.azurecr.io/nodeapp
+
+az acr login --name baidonodemongocr
+
+	if login success can push image
+
+docker push baidonodemongocr.azurecr.io/nodeapp
+
+Edit docker-compose.yml file to upload on azure
+
+#################################
+
+version: '3.9'
+
+services:
+  #mongo database service
+  mongodb:
+    container_name: 'database_container'
+    image: mongo:latest
+    ports: 
+      - 27017:27017
+    deploy:
+      resources:
+        reservations:
+          cpus: '2'
+          memory: 2GB
+    restart: always
+    volumes:
+      - mongodb:/data/db
+  
+  #nodeJd service
+  node:
+    # build: .
+    image: baidonodemongocr.azurecr.io/nodeapp
+    ports:
+      - 3000:3000
+    environment:
+      PORT: 3000
+      DB_URI: mongodb://mongoDB:27017
+      SESSION_SECRET: expressSessionSecret
+    depends_on:
+      - mongodb
+volumes:
+  mongodb: 
+    driver: azure_file
+    driver_opts:
+      share_name: mongo-volume
+      storage_account_name: baidonodeappstorageacc
+
+
+#################################
+
+
+docker context create aci nodeappontext
+
+docker context use nodeappontext
+
+docker compose up -d
+
+if our app working after deployment and run we can make a screenshot
+
+docker context use default 
+
+

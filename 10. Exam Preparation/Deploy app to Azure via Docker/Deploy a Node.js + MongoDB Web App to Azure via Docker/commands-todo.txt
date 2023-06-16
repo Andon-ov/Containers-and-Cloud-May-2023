@@ -1,0 +1,149 @@
+Can i make nice folder name because folder name make a container instances name in azure!!!
+	baido-docker-solution
+First make a Dockerfile
+
+#################################
+
+# Using Node.js image as base
+FROM node:16
+
+# Create the application directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install the dependencies
+RUN npm install
+
+# Copy the rest of the application files
+COPY . .
+
+# Copy the database connection files
+COPY config/connection.js ./config/
+COPY config/keyvault.js ./config/
+
+# Define the storage location of the database data
+VOLUME /data/db
+
+# Port on which the application will run
+EXPOSE 3000
+
+# Command to start the application
+CMD npm start
+
+#################################
+The docker file should be in the outermost directory!!!
+
+Build image from Dockerfile
+
+docker build -t myapp .
+
+docker run myapp
+	- to try do you myapp working in our pc 
+
+Make docker-compose.yml
+chek appsettings.json to see how to myapp connect to the base
+#################################
+
+version: "3"
+services:
+  app:
+    image: baidotodoappcr.azurecr.io/todoapp
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=mongodb://mongodb:27017/azure-todo-app
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+
+
+#################################
+
+Chek docker-compose work properly - run in our pc for test
+
+docker compose up -d
+
+chek http://localhost/
+
+docker ps -a
+	chek our app work properly
+
+docker compose down --volumes
+
+
+az login
+
+# az login --use-device-code
+# docker login 
+# docker login azure
+
+az group create --name baido-todo-app --location westeurope
+
+az acr create --resource-group baido-todo-app --name baidotodoappcr --sku Basic
+
+	chek in azure for resource group baido-todo-app and container registry baidotodoappcr
+
+docker tag myapp baidotodoappcr.azurecr.io/todoapp
+
+az acr login --name baidotodoappcr
+
+	if login success can push image
+
+docker push baidotodoappcr.azurecr.io/todoapp
+
+Edit docker-compose.yml file to upload on azure
+
+#################################
+
+version: "3"
+services:
+  app:
+    image: baidotodoappcr.azurecr.io/todoapp
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=mongodb://baidotodoapp:4OWTfj31J3f36pvj8UwWVIPrFBoi9XgXCthTLGvZ8luPsooSMMh49hfRqeTkboBJMP2h9aJCdVKSACDbaEMutA==@baidotodoapp.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@baidotodoapp@
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+volumes:
+  mongo-data:
+
+
+#################################
+
+
+az cosmosdb create --name baidotodoapp --resource-group baido-todo-app --kind MongoDB --locations regionName=westeurope
+az cosmosdb mongodb database create --account-name baidotodoapp --name azure-todo-app --resource-group baido-todo-app
+az cosmosdb keys list --name baidotodoapp --resource-group baido-todo-app --type connection-strings --query "connectionStrings[0].connectionString" --output tsv
+
+
+docker context create aci todoappontext
+
+docker context use todoappontext
+
+docker compose up -d
+
+if our app working after deployment and run we can make a screenshot
+
+docker context use default 
+
+
+
+az acr login --name taskboardcr
+
+docker compose up --build
+(to try do you app working in our pc)
+
