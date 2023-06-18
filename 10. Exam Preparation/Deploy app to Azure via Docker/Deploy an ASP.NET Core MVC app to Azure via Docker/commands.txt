@@ -153,3 +153,10 @@ az acr login --name taskboardcr
 docker compose up --build
 (to try do you app working in our pc)
 
+docker compose up -d
+[+] Running 5/5
+ ⠿ baidolibrarystorageacc                          Created                                                                                                                                                   21.4s
+ ⠿ sql-volume                                      Created                                                                                                                                                    0.9s
+ ⠿ Group deployanaspnetcoremvcapptoazureviadocker  Created                                                                                                                                                    6.0s
+ ⠿ sqlserver                                       Created                                                                                                                                                   73.9s
+ ⠿ web-app                                         Created                                        

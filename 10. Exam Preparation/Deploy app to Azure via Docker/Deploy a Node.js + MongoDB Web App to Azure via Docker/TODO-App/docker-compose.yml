@@ -1,55 +1,13 @@
-version: "3"
-services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      - DATABASE_URL=mongodb://mongo:27017/azure-todo-app
-  mongo:
-    image: mongo:latest
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-volumes:
-  mongo-data:
-
-
-
-
-# ##########################################################
-
 # version: "3"
 # services:
 #   app:
-#     image: baidotodoappcr.azurecr.io/todoapp
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
 #     ports:
 #       - "3000:3000"
 #     environment:
-#       - DATABASE_URL=mongodb://mongodb:27017/azure-todo-app
-#   mongodb:
-#     container_name: mongodb
-#     image: mongo
-#     ports:
-#       - "27017:27017"
-#     volumes:
-#       - mongo-data:/data/db
-
-# volumes:
-#   mongo-data:
-
-
-# version: "3"
-# services:
-#   app:
-#     image: baidotodoappcr.azurecr.io/todoapp
-#     ports:
-#       - "3000:3000"
-#     environment:
-#       - DATABASE_URL=mongodb://baidotodoapp:4OWTfj31J3f36pvj8UwWVIPrFBoi9XgXCthTLGvZ8luPsooSMMh49hfRqeTkboBJMP2h9aJCdVKSACDbaEMutA==@baidotodoapp.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@baidotodoapp@
+#       - DATABASE_URL=mongodb://mongo:27017/azure-todo-app
 #   mongo:
 #     image: mongo:latest
 #     ports:
@@ -57,84 +15,128 @@ volumes:
 #     volumes:
 #       - mongo-data:/data/db
 # volumes:
-#   my_volume:
-#     driver: azure_file
-#     driver_opts:
-#       share_name: my_share
-#       storage_account_name: my_storage_account
-
-
-# version: "3.8"
-
-# services:
-#   web-app:
-#     container_name: web-app
-#     image: baidotodoappcr.azurecr.io/todoapp
-#     ports:
-#       - "3000:3000"
-#     environment:
-#       - DATABASE_URL=mongodb://mongodb:27017/azure-todo-app
-
-#     depends_on:
-#       - mongodb
-
-#   mongodb:
-#     container_name: mongodb
-#     image: mongo:latest
-#     ports:
-#       - "27017:27017"
-#     volumes:
-#       - mongo-data:/data/db
-#     deploy:
-#             resources: 
-#                 reservations:
-#                     cpus: "2"
-#                     memory: 2GB
-
-# volumes:
 #   mongo-data:
-#     driver: azure_file
-#     driver_opts:
-#       share_name: myshare
-#       storage_account_name: baidotodoappsa
+
+# ##########################################################
+
+version: "3"
+services:
+  app:
+    image: baidotodoappcr.azurecr.io/todoapp
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=mongodb://mongodb:27017/azure-todo-app
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+    driver: azure_file
+    driver_opts:
+      share_name: myshare
+      storage_account_name: baidotodoappsa
 
 
-# version: "3.8"
 
-# services:
-#   mongodb:
-#     container_name: mongodb
-#     image: mongo:latest
-#     ports:
-#       - "27017:27017"
-#     environment:
-#       - MONGO_INITDB_DATABASE=azure-todo-app
-#     volumes:
-#       - mongo-data:/data/db
-#     deploy:
-#       resources: 
-#           reservations:
-#               cpus: "2"
-#               memory: 2GB
-
-
-#   web-app:
-#     container_name: web-app
-#     domainname: baido-todo-app
-#     image: baidotodoappcr.azurecr.io/todoapp
-#     ports:
-#       - "3000:3000"
-#     restart: on-failure
-#     environment:
-#       - DATABASE_URL=mongodb://mongodb:27017/azure-todo-app
-#     depends_on:
-#       - mongodb  
+    # version: "3"
+    # services:
+    #   app:
+    #     image: baidotodoappcr.azurecr.io/todoapp
+    #     ports:
+    #       - "3000:3000"
+    #     environment:
+    #       - DATABASE_URL=mongodb://baidotodoapp:4OWTfj31J3f36pvj8UwWVIPrFBoi9XgXCthTLGvZ8luPsooSMMh49hfRqeTkboBJMP2h9aJCdVKSACDbaEMutA==@baidotodoapp.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@baidotodoapp@
+    #   mongo:
+    #     image: mongo:latest
+    #     ports:
+    #       - "27017:27017"
+    #     volumes:
+    #       - mongo-data:/data/db
+    # volumes:
+    #   my_volume:
+    #     driver: azure_file
+    #     driver_opts:
+    #       share_name: my_share
+    #       storage_account_name: my_storage_account
 
 
-  
+    # version: "3.8"
 
-# volumes:
-#   mongo-data:
+    # services:
+    #   web-app:
+    #     container_name: web-app
+    #     image: baidotodoappcr.azurecr.io/todoapp
+    #     ports:
+    #       - "3000:3000"
+    #     environment:
+    #       - DATABASE_URL=mongodb://mongodb:27017/azure-todo-app
+
+    #     depends_on:
+    #       - mongodb
+
+    #   mongodb:
+    #     container_name: mongodb
+    #     image: mongo:latest
+    #     ports:
+    #       - "27017:27017"
+    #     volumes:
+    #       - mongo-data:/data/db
+    #     deploy:
+    #             resources: 
+    #                 reservations:
+    #                     cpus: "2"
+    #                     memory: 2GB
+
+    # volumes:
+    #   mongo-data:
+    #     driver: azure_file
+    #     driver_opts:
+    #       share_name: myshare
+    #       storage_account_name: baidotodoappsa
+
+
+    # version: "3.8"
+
+    # services:
+    #   mongodb:
+    #     container_name: mongodb
+    #     image: mongo:latest
+    #     ports:
+    #       - "27017:27017"
+    #     environment:
+    #       - MONGO_INITDB_DATABASE=azure-todo-app
+    #     volumes:
+    #       - mongo-data:/data/db
+    #     deploy:
+    #       resources: 
+    #           reservations:
+    #               cpus: "2"
+    #               memory: 2GB
+
+
+    #   web-app:
+    #     container_name: web-app
+    #     domainname: baido-todo-app
+    #     image: baidotodoappcr.azurecr.io/todoapp
+    #     ports:
+    #       - "3000:3000"
+    #     restart: on-failure
+    #     environment:
+    #       - DATABASE_URL=mongodb://mongodb:27017/azure-todo-app
+    #     depends_on:
+    #       - mongodb  
+
+
+
+
+    # volumes:
+    #   mongo-data:
     # driver: azure_file
     # driver_opts:
     #   share_name: myshare
@@ -143,28 +145,28 @@ volumes:
 
 
 
-# version: '3.9'
+    # version: '3.9'
 
-# services:
-#   #mongo database service
-#   mongodb:
-#     container_name: 'database_container'
-#     image: mongo:latest
-#     restart: always
-#     volumes:
-#       - mongoDB:/data/db
-  
-#   #nodeJd service
-#   node:
-#     build: .
-#     ports:
-#       - 8000:3000
-#     environment:
-#       PORT: 3000
-#       DB_URI: mongodb://mongoDB:27017
-#       SESSION_SECRET: expressSessionSecret
-#     depends_on:
-#       - mongodb
+    # services:
+    #   #mongo database service
+    #   mongodb:
+    #     container_name: 'database_container'
+    #     image: mongo:latest
+    #     restart: always
+    #     volumes:
+    #       - mongoDB:/data/db
 
-# volumes:
-#   mongoDB: {}
+    #   #nodeJd service
+    #   node:
+    #     build: .
+    #     ports:
+    #       - 8000:3000
+    #     environment:
+    #       PORT: 3000
+    #       DB_URI: mongodb://mongoDB:27017
+    #       SESSION_SECRET: expressSessionSecret
+    #     depends_on:
+    #       - mongodb
+
+    # volumes:
+    #   mongoDB: {}

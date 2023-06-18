@@ -11,24 +11,24 @@ services:
             - MSSQL_SA_PASSWORD=yourStrongPassword12#
         volumes: 
             - sqldata:/var/opt/mssql/server
-        # deploy:
-        #     resources: 
-        #         reservations:
-        #             cpus: "2"
-        #             memory: 2GB
+        deploy:
+            resources: 
+                reservations:
+                    cpus: "2"
+                    memory: 2GB
     web-app:
         container_name: web-app
         build:
             dockerfile: ./Dockerfile
         domainname: baido-library
-        # image: baidolibrarycr.azurecr.io/library
+        image: baidolibrarycr.azurecr.io/library
         ports: 
             - "80:80"
         restart: on-failure
 
 volumes:
     sqldata:
-        # driver: azure_file
-        # driver_opts:
-        #     share_name: sql-volume
-        #     storage_account_name: baidolibrarystorageacc
+        driver: azure_file
+        driver_opts:
+            share_name: sql-volume
+            storage_account_name: baidolibrarystorageacc

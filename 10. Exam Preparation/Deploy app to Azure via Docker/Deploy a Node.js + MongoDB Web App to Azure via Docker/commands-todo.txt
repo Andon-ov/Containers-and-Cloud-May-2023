@@ -72,7 +72,8 @@ Chek docker-compose work properly - run in our pc for test
 
 docker compose up -d
 
-chek http://localhost/
+chek http://localhost:3000/
+
 
 docker ps -a
 	chek our app work properly

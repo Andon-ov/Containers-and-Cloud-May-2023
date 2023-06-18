@@ -1,0 +1,35 @@
+Create GitHub repo with name Contacts
+git clone ...
+
+to main.tf connection srting we use  "DefaultConnection": "Server=sqlserver;Database=Library;User Id=sa;Password=yourStrongPassword12#;MultipleActiveResultSets=true;"
+                                     "DefaultConnection": "Server=sqlserver;Database=Contacts;User Id=sa;Password=myStrongPassword12#;MultipleActiveResultSets=true;"
+    from app/appsettings.json
+
+edit values.tfvars and add app name Contacts
+###############################
+resource_group_name     = "baido-Contacts"
+resource_group_location = "West Europe"
+app_service_plan_name   = "baido-contacts-plan"
+app_service_name        = "baido-contacts"
+sql_server_name         = "baido-contacts-sql"
+sql_database_name       = "Contacts"
+sql_admin_login         = "4dm1n157r470r"
+sql_admin_password      = "4-v3ry-53cr37-p455w0rd"
+firewall_rule_name      = "baidoContactsFW"
+repo_URL                = "https://github.com/Andon-ov/Contacts"
+###############################
+
+add files in Library folder
+
+git add .
+git commit -m 'initial commit'
+git push
+
+write repo_URL ="https://github.com/Andon-ov/Contacts"
+    repo name witout .git
+
+terraform init
+terraform fmt -recursive
+terraform validate
+terraform apply -var-file="values.tfvars" -auto-approve
+terraform destroy -var-file="values.tfvars"

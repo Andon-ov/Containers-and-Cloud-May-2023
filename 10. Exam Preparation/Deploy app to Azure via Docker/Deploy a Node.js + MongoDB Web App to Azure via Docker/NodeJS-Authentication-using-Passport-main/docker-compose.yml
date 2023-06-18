@@ -1,3 +1,44 @@
+# version: '3.9'
+
+# services:
+#   #mongo database service
+#   mongodb:
+#     container_name: 'database_container'
+#     image: mongo:latest
+#     ports: 
+#       - 27017:27017
+#     deploy:
+#       resources:
+#         reservations:
+#           cpus: '2'
+#           memory: 2GB
+#     restart: always
+#     volumes:
+#       - mongodb:/data/db
+  
+#   #nodeJd service
+#   node:
+#     # build: .
+#     image: baidonodemongocr.azurecr.io/nodeapp
+#     ports:
+#       - 3000:3000
+#     environment:
+#       PORT: 3000
+#       DB_URI: mongodb://mongoDB:27017
+#       SESSION_SECRET: expressSessionSecret
+#     depends_on:
+#       - mongodb
+# volumes:
+#   mongodb: 
+#     driver: azure_file
+#     driver_opts:
+#       share_name: mongo-volume
+#       storage_account_name: baidonodeappstorageacc
+
+
+# local
+
+
 version: '3.9'
 
 services:
@@ -5,32 +46,21 @@ services:
   mongodb:
     container_name: 'database_container'
     image: mongo:latest
-    ports: 
-      - 27017:27017
-    deploy:
-      resources:
-        reservations:
-          cpus: '2'
-          memory: 2GB
     restart: always
     volumes:
-      - mongodb:/data/db
+      - mongoDB:/data/db
   
   #nodeJd service
   node:
-    # build: .
-    image: baidonodemongocr.azurecr.io/nodeapp
+    build: .
     ports:
-      - 3000:3000
+      - 8000:3000
     environment:
       PORT: 3000
       DB_URI: mongodb://mongoDB:27017
       SESSION_SECRET: expressSessionSecret
     depends_on:
       - mongodb
+
 volumes:
-  mongodb: 
-    driver: azure_file
-    driver_opts:
-      share_name: mongo-volume
-      storage_account_name: baidonodeappstorageacc
+  mongoDB: {}
